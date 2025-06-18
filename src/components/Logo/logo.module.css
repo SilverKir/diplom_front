@@ -1,0 +1,15 @@
+.logo {
+  width: 257px;
+  height: 67px;
+  background-color: #079aa2;
+  border-radius: 8px;
+  display: block;
+}
+.logo-text {
+  font-size: 16px;
+  color: white;
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}

@@ -1,0 +1,20 @@
+.login-select {
+  border: none;
+  width: 18px;
+  color: #8a92a6;
+}
+
+.select-button {
+  margin-right: 5px;
+  border: none;
+  background-color: white;
+  color: #8a92a6;
+}
+
+.select-button:hover {
+  cursor: pointer;
+}
+
+.select-module {
+  display: flex;
+}
