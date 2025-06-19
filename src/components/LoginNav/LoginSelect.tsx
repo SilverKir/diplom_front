@@ -15,23 +15,24 @@ export const LoginSelect = (props: { actions: ILoginAction[] }) => {
   };
   const action = getActionById(selectedOption);
   return (
-    <div className={classes["select-module"]}>
-      {/* <button className= {classes["select-button"]} onClick={action?.action}>{action?.name}</button> */}
-      <NavLink className={classes["select-button"]} to={"/login"}>
-        {action?.name}
-      </NavLink>
-      <div>
-        <select
-          className={classes["login-select"]}
-          value={selectedOption}
-          onChange={handleSelectChange}
-        >
-          {props.actions.map((action) => (
-            <option key={action.id} value={action.id}>
-              {action.name}
-            </option>
-          ))}
-        </select>
+    <div className={classes["header-block"]}>
+      <div className={classes["select-module"]}>
+        <NavLink className={classes["select-button"]} to={action?.link || "/"}>
+          {action?.name}
+        </NavLink>
+        <div>
+          <select
+            className={classes["login-select"]}
+            value={selectedOption}
+            onChange={handleSelectChange}
+          >
+            {props.actions.map((action) => (
+              <option key={action.id} value={action.id}>
+                {action.name}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
     </div>
   );

@@ -2,8 +2,6 @@ import "./App.css";
 
 import {
   Route,
-  Routes,
-  Navigate,
   createBrowserRouter,
   createRoutesFromElements,
   RouterProvider,
@@ -15,7 +13,8 @@ function App() {
   const routes = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<Layout />}>
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login isLogin={true} />} />
+        <Route path="/register" element={<Login isLogin={false} />} />
       </Route>
     )
   );
@@ -25,5 +24,4 @@ function App() {
     </>
   );
 }
-
 export default App;
