@@ -3,15 +3,26 @@ import { AuthContext } from "../../context/AuthContext";
 import { useContext, useState } from "react";
 import { useAppDispatch } from "../../hooks";
 import { logout } from "../../redux/slices/loginSlice";
+import { setToken } from "../../redux/slices/tokenSlice";
 import classes from "./login.module.css";
-import { useCookie } from "../../hooks";
+import { useAppSelector } from "../../hooks";
+import { SetAuth } from "../../scripts";
+
+export interface authResponse {
+  id: string;
+  email: string;
+  name: string;
+  contactPhone: string;
+  token: string;
+}
 
 export const Login = (props: { isLogin: boolean }) => {
+  const { authToken } = useAppSelector((state) => state.authToken);
   const dispatch = useAppDispatch();
   const location = useLocation();
   const navigate = useNavigate();
   const { handleAuth } = useContext(AuthContext);
-  const [cookies, setCookies] = useState([]);
+  const [hasError, setError] = useState<Error | null>(null);
 
   const [form, setForm] = useState({
     email: "",
@@ -20,42 +31,25 @@ export const Login = (props: { isLogin: boolean }) => {
 
   const fromPage = location.state?.from;
 
-  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+  const HandleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(form.email);
-    console.log(form.password);
     try {
-      const response = await fetch("http://localhost:3031/api/auth/login", {
-        credentials: "include",
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ ...form }),
-      });
-
+      const response = await SetAuth(form, authToken);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      const setCookieHeaders = response.headers.getSetCookie();
-      setCookies(setCookieHeaders as unknown as []);
       const data = await response.json();
-      console.log("Resp:", cookies);
 
-      console.log("Success:", data);
-      const cookieValue = document.cookie.split("; ");
-      // .find((row) => row.startsWith("id="))
-      // ?.split("=")[1];
-
-      console.log("cookie :", cookieValue);
-
-      //   handleAuth();
-      //   dispatch(logout());
-      //   navigate(`${fromPage ? fromPage : "/"}`);
-    } catch (error) {
-      console.error("Error:", error);
+      dispatch(setToken(data.token));
+      handleAuth();
+      // dispatch(logout());
+      // navigate(`${fromPage ? fromPage : "/"}`);
+    } catch (e) {
+      setError(e as Error);
+      console.log(e);
     }
   };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setForm((prevForm) => ({
@@ -69,8 +63,9 @@ export const Login = (props: { isLogin: boolean }) => {
       <form
         className={classes["login-form"]}
         autoComplete="off"
-        onSubmit={handleLogin}
+        onSubmit={HandleLogin}
       >
+        <h2 className={classes["form-error"]}>{hasError?.message}</h2>
         <input
           className={classes["form-data"]}
           type="email"
@@ -93,15 +88,6 @@ export const Login = (props: { isLogin: boolean }) => {
           {props.isLogin ? "Войти" : "Зарегистрироваться"}
         </button>
       </form>
-
-      <div>
-        <h1>Set-Cookie Headers</h1>
-        <ul>
-          {cookies.map((cookie, index) => (
-            <li key={index}>{cookie}</li>
-          ))}
-        </ul>
-      </div>
     </>
   );
 };

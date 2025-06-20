@@ -5,4 +5,4 @@ import type { RootState, AppDispatch } from "../redux/store";
 export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
-export { useCookie } from "./useCookie";
+export {useGetData} from "./useGetData"
