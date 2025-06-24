@@ -1,2 +1,3 @@
-export { SetAuth } from "./Auth/setAuth";
-export {GetDataFromAPI} from "./GetDataFromAPI"
+export { SetAuth } from "./Auth/SetAuth";
+export { GetDataFromAPI } from "./GetDataFromAPI";
+export { Logout } from "./Auth/Logout";

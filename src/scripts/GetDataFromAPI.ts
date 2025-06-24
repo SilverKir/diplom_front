@@ -3,7 +3,7 @@ const URL = import.meta.env.VITE_APP_NAMES_URL;
 export interface IRequestData {
   url: string;
   method: string;
-  arg: object;
+  arg?: object;
   token: string;
 }
 

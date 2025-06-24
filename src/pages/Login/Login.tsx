@@ -1,12 +1,12 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { useContext, useState } from "react";
-import { useAppDispatch } from "../../hooks";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 import { logout } from "../../redux/slices/loginSlice";
-import { setToken } from "../../redux/slices/tokenSlice";
 import classes from "./login.module.css";
-import { useAppSelector } from "../../hooks";
 import { SetAuth } from "../../scripts";
+import { setToken } from "../../redux/slices/tokenSlice";
+import { InputField } from "../../components/Custom/InputField";
 
 export interface authResponse {
   id: string;
@@ -22,8 +22,8 @@ export const Login = (props: { isLogin: boolean }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const { handleAuth } = useContext(AuthContext);
-  const [hasError, setError] = useState<Error | null>(null);
 
+  const [hasError, setError] = useState<string>("");
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -33,29 +33,35 @@ export const Login = (props: { isLogin: boolean }) => {
 
   const HandleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     try {
       const response = await SetAuth(form, authToken);
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        throw new Error(`${response.status}`);
       }
       const data = await response.json();
 
-      dispatch(setToken(data.token));
       handleAuth();
-      // dispatch(logout());
-      // navigate(`${fromPage ? fromPage : "/"}`);
+      dispatch(logout());
+      dispatch(setToken(data.token));
+      navigate(`${fromPage ? fromPage : "/"}`);
     } catch (e) {
-      setError(e as Error);
-      console.log(e);
+      setError(e.message);
     }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     setForm((prevForm) => ({
       ...prevForm,
       [name]: value,
     }));
+    if (!emailRegex.test(form.email)) {
+      setError("Необ");
+    } else {
+      setError("");
+    }
   };
 
   return (
@@ -65,8 +71,7 @@ export const Login = (props: { isLogin: boolean }) => {
         autoComplete="off"
         onSubmit={HandleLogin}
       >
-        <h2 className={classes["form-error"]}>{hasError?.message}</h2>
-        <input
+        <InputField
           className={classes["form-data"]}
           type="email"
           id="email"
@@ -74,6 +79,7 @@ export const Login = (props: { isLogin: boolean }) => {
           value={form.email}
           placeholder="Введите логин"
           onChange={handleChange}
+          isError={hasError}
         />
         <input
           className={classes["form-data"]}

@@ -12,11 +12,9 @@
 }
 .form-data {
   max-width: 320px;
-  color: #8a92a6;
-  border-radius: 4px;
-  height: 44px;
-  padding-left: 24px;
+  
 }
+
 .login-form {
   display: flex;
   flex-direction: column;

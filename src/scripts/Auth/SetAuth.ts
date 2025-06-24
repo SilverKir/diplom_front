@@ -5,7 +5,7 @@ export interface authRequest {
   password: string;
 }
 
-export const SetAuth = async (req: authRequest, token: string) => {
+export const SetAuth = async (req: authRequest, token:string) => {
   return await GetDataFromAPI({
     url: "/auth/login",
     method: "POST",

@@ -17,7 +17,11 @@ export const LoginSelect = (props: { actions: ILoginAction[] }) => {
   return (
     <div className={classes["header-block"]}>
       <div className={classes["select-module"]}>
-        <NavLink className={classes["select-button"]} to={action?.link || "/"}>
+        <NavLink
+          className={classes["select-button"]}
+          to={action?.link ? action?.link : "#"}
+          onClick={action?.action ? action.action : undefined}
+        >
           {action?.name}
         </NavLink>
         <div>

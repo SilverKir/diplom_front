@@ -1,5 +1,6 @@
 export interface ILoginAction {
   id: number;
   name: string;
-  link: string;
+  link?: string;
+  action?: () => void;
 }

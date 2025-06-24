@@ -1,0 +1,34 @@
+.formField {
+  display: inline-flex;
+  border: 2px solid;
+  border-radius: 8px;
+  padding: 10px;
+  align-items: center;
+}
+.errorField {
+  border-color: #ff0000;
+}
+.checkedField {
+  border-color: #008000;
+}
+.inputField {
+  width: 100%;
+  height: 25px;
+  line-height: 35px;
+  border: transparent;
+  outline: none;
+}
+.inputField::placeholder {
+  color: #8f8f8f;
+}
+
+.errorMessage {
+  color: #ff0000;
+  font-size: 12px;
+}
+.messageBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  height: 55px;
+}
