@@ -4,9 +4,9 @@ import { useContext, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { logout } from "../../redux/slices/loginSlice";
 import classes from "./login.module.css";
-import { SetAuth } from "../../scripts";
+import { GetError, SetAuth } from "../../scripts";
 import { setToken } from "../../redux/slices/tokenSlice";
-import { InputField } from "../../components/Custom/InputField";
+import { LoginForm } from "../../components/Custom/LoginForm";
 
 export interface authResponse {
   id: string;
@@ -22,7 +22,6 @@ export const Login = (props: { isLogin: boolean }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const { handleAuth } = useContext(AuthContext);
-
   const [hasError, setError] = useState<string>("");
   const [form, setForm] = useState({
     email: "",
@@ -37,10 +36,10 @@ export const Login = (props: { isLogin: boolean }) => {
     try {
       const response = await SetAuth(form, authToken);
       if (!response.ok) {
-        throw new Error(`${response.status}`);
+        throw new Error(GetError(response.status));
       }
+      setError("");
       const data = await response.json();
-
       handleAuth();
       dispatch(logout());
       dispatch(setToken(data.token));
@@ -50,50 +49,15 @@ export const Login = (props: { isLogin: boolean }) => {
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    setForm((prevForm) => ({
-      ...prevForm,
-      [name]: value,
-    }));
-    if (!emailRegex.test(form.email)) {
-      setError("Необ");
-    } else {
-      setError("");
-    }
-  };
-
   return (
     <>
-      <form
-        className={classes["login-form"]}
-        autoComplete="off"
+      <LoginForm
+        isLogin={props.isLogin}
+        form={form}
+        setForm={setForm}
         onSubmit={HandleLogin}
-      >
-        <InputField
-          className={classes["form-data"]}
-          type="email"
-          id="email"
-          name="email"
-          value={form.email}
-          placeholder="Введите логин"
-          onChange={handleChange}
-          isError={hasError}
-        />
-        <input
-          className={classes["form-data"]}
-          type="password"
-          id="password"
-          name="password"
-          value={form.password}
-          placeholder="Введите пароль"
-          onChange={handleChange}
-        />
-        <button className={classes["form-button"]} type="submit">
-          {props.isLogin ? "Войти" : "Зарегистрироваться"}
-        </button>
-      </form>
+        isError={hasError}
+      />
     </>
   );
 };
