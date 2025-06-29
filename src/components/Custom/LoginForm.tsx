@@ -1,4 +1,5 @@
 import { useState, Dispatch, SetStateAction } from "react";
+import { Link } from "react-router-dom";
 import { InputField } from "./InputField";
 import classes from "./loginForm.module.css";
 import { ILoginData } from "../../interfaces";
@@ -8,14 +9,15 @@ import {
   WRONG_EMAIL_FORMAT,
   REQUIRED_EMAIL,
 } from "../../constants/";
+import { CustomButton } from "./CustomButton";
 
 type LoginFormProps = {
   className?: string;
-  isLogin: boolean;
   isError?: string;
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
   form: ILoginData;
   setForm: Dispatch<SetStateAction<ILoginData>>;
+  isLoading?: boolean;
 };
 
 export const LoginForm = (props: LoginFormProps) => {
@@ -74,6 +76,12 @@ export const LoginForm = (props: LoginFormProps) => {
           isChecked[0] && isChecked[1] ? props.onSubmit : handleNullLogin
         }
       >
+        <div className={classes["login-registration-selection"]}>
+          <Link to="/login">Войти</Link>
+          <div> или </div>
+          <Link to="/register">Зарегистрироваться</Link>
+        </div>
+
         <InputField
           className={classes["form-data"]}
           type="email"
@@ -94,9 +102,13 @@ export const LoginForm = (props: LoginFormProps) => {
           isError={hasError[1]}
           isChecked={isChecked[1]}
         />
-        <button className={classes["form-button"]} type="submit">
-          {props.isLogin ? "Войти" : "Зарегистрироваться"}
-        </button>
+
+        <CustomButton
+          className={classes["form-data"]}
+          type="submit"
+          text="Войти"
+          isLoading={props.isLoading}
+        />
         <div className={classes["error-message"]}>
           {props.isError ? props.isError : ""}
         </div>

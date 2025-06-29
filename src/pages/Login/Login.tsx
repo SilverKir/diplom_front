@@ -16,7 +16,7 @@ export interface authResponse {
   token: string;
 }
 
-export const Login = (props: { isLogin: boolean }) => {
+export const Login = () => {
   const { authToken } = useAppSelector((state) => state.authToken);
   const dispatch = useAppDispatch();
   const location = useLocation();
@@ -27,6 +27,7 @@ export const Login = (props: { isLogin: boolean }) => {
     email: "",
     password: "",
   });
+  const [isLoading, setLoading] = useState<boolean>(false);
 
   const fromPage = location.state?.from;
 
@@ -34,6 +35,7 @@ export const Login = (props: { isLogin: boolean }) => {
     e.preventDefault();
 
     try {
+      setLoading(true);
       const response = await SetAuth(form, authToken);
       if (!response.ok) {
         throw new Error(GetError(response.status));
@@ -43,20 +45,22 @@ export const Login = (props: { isLogin: boolean }) => {
       handleAuth();
       dispatch(logout());
       dispatch(setToken(data.token));
+      setLoading(false);
       navigate(`${fromPage ? fromPage : "/"}`);
     } catch (e) {
       setError(e.message);
+      setLoading(false);
     }
   };
 
   return (
     <>
       <LoginForm
-        isLogin={props.isLogin}
         form={form}
         setForm={setForm}
         onSubmit={HandleLogin}
         isError={hasError}
+        isLoading={isLoading}
       />
     </>
   );
