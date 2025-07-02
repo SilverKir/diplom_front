@@ -1,0 +1,10 @@
+.main-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.nav-layot {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

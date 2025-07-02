@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import loginReducer from "../slices/loginSlice";
 import tokenReducer from "../slices/tokenSlice";
+import navReducer from "../slices/navSlice";
 
 export const store = configureStore({
   reducer: {
     loginActions: loginReducer,
     authToken: tokenReducer,
+    navActions: navReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
 });

@@ -4,8 +4,8 @@ export interface IRequestData {
   url: string;
   method: string;
   arg?: object;
-  token: string;
 }
+const token = localStorage.getItem("token");
 
 export const GetDataFromAPI = async (fetchParam: IRequestData) => {
   return await fetch(URL + fetchParam.url, {
@@ -14,7 +14,7 @@ export const GetDataFromAPI = async (fetchParam: IRequestData) => {
     headers: {
       "Content-Type": "application/json",
       Cookie: document.cookie,
-      Authorization: `Bearer ${fetchParam.token}`,
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(fetchParam.arg),
   });

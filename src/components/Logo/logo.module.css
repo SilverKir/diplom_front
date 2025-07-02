@@ -1,9 +1,8 @@
 .logo {
-  width: 257px;
+  min-width: 257px;
   height: 67px;
   background-color: #079aa2;
   border-radius: 8px;
-  display: block;
 }
 .logo-text {
   font-size: 16px;

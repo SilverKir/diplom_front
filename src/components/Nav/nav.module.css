@@ -1,0 +1,17 @@
+.nav-wrap {
+  background-color: white;
+  width: 257px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-right: 20px;
+  margin-bottom: auto;
+}
+.nav-link {
+  margin: 10px 20px;
+  text-decoration: none;
+  color: #8a92a6;
+}

@@ -5,11 +5,10 @@ export interface authRequest {
   password: string;
 }
 
-export const SetAuth = async (req: authRequest, token:string) => {
+export const SetAuth = async (req: authRequest) => {
   return await GetDataFromAPI({
     url: "/auth/login",
     method: "POST",
     arg: req,
-    token: token,
   });
 };
