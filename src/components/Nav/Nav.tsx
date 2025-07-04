@@ -10,6 +10,7 @@ export const Nav = (props: { actions: ILoginAction[] }) => {
           return (
             <NavLink
               className={classes["nav-link"]}
+              key={action?.id}
               to={action?.link ? action?.link : "#"}
               onClick={action?.action ? action.action : undefined}
             >

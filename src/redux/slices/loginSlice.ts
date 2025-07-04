@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-
 import { ILoginAction } from "../../interfaces";
 import { loginLinks, logoutLinks } from "../../constants/login";
 

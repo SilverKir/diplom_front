@@ -5,12 +5,12 @@ import { useAppSelector } from "../../hooks";
 import classes from "./layout.module.css";
 
 export const Layout = () => {
-  const { navActions } = useAppSelector((state) => state.navActions);
+  const { actions } = useAppSelector((state) => state.authActions);
   return (
     <div className="site-container">
       <Header />
       <div className={classes["nav-layot"]}>
-        <Nav actions={navActions} />
+        <Nav actions={actions.nav} />
         <main className={classes["main-wrap"]}>
           <Outlet />
         </main>

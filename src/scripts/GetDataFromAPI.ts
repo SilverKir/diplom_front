@@ -8,7 +8,7 @@ export interface IRequestData {
 const token = localStorage.getItem("token");
 
 export const GetDataFromAPI = async (fetchParam: IRequestData) => {
-  return await fetch(URL + fetchParam.url, {
+  const response = await fetch(URL + fetchParam.url, {
     credentials: "include",
     method: fetchParam.method,
     headers: {
@@ -18,4 +18,8 @@ export const GetDataFromAPI = async (fetchParam: IRequestData) => {
     },
     body: JSON.stringify(fetchParam.arg),
   });
+  if (!response.ok) {
+    throw new Error(String(response.status));
+  }
+  return response;
 };
