@@ -5,7 +5,7 @@ import { useAppSelector } from "../../hooks";
 import classes from "./layout.module.css";
 
 export const Layout = () => {
-  const { actions } = useAppSelector((state) => state.authActions);
+  const { actions } = useAppSelector((state) => state.navActions);
   return (
     <div className="site-container">
       <Header />

@@ -1,13 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import loginReducer from "../slices/loginSlice";
-import tokenReducer from "../slices/tokenSlice";
 import navReducer from "../slices/navSlice";
 import authReducer from "../slices/authSlice";
 
 export const store = configureStore({
   reducer: {
-    loginActions: loginReducer,
-    authToken: tokenReducer,
     navActions: navReducer,
     authActions: authReducer,
   },

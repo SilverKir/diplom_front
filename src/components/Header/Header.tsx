@@ -1,11 +1,17 @@
 import { LoginSelect } from "../LoginNav/LoginSelect";
 import { Logo } from "../Logo/Logo";
 import classes from "./header.module.css";
-import { useAppSelector } from "../../hooks";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 import { loginLinks, logoutLinks } from "../../constants/login";
+import { NavThunk } from "../../redux/thunks/NavThunk";
+import { useEffect } from "react";
 
 export const Header = () => {
-  const { actions } = useAppSelector((state) => state.authActions);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(NavThunk());
+  }, []);
+  const { actions } = useAppSelector((state) => state.navActions);
 
   return (
     <>

@@ -14,7 +14,7 @@ export const useGetData = <T>(
 ): GetDataResult<T> => {
   const [data, setData] = useState(initialData);
   const [hasError, setError] = useState<Error | null>(null);
-  const { authToken } = useAppSelector((state) => state.authToken);
+  const { authToken } = useAppSelector((state) => state.authActions);
 
   useEffect(() => {
     const fetchData = async () => {

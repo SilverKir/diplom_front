@@ -1,27 +1,23 @@
-import { useContext } from "react";
-import { GetDataFromAPI } from "../index";
+import { useContext, useEffect } from "react";
+
 import { useAppDispatch } from "../../hooks";
 import { AuthContext } from "../../context/AuthContext";
-import { login } from "../../redux/slices/loginSlice";
-import { setToken } from "../../redux/slices/tokenSlice";
+import { LogoutThunk } from "../../redux/thunks/LogoutThunk";
+import { NavThunk } from "../../redux/thunks/NavThunk";
+import { SetLogout } from "./SetLogout";
 
-export const Logout = async () => {
-  // const dispatch = useAppDispatch();
+export const Logout = () => {
+  const dispatch = useAppDispatch();
   // const { handleLogout } = useContext(AuthContext);
+  useEffect(() => {
+    const fetchData = async () => {
+      await SetLogout();
+      localStorage.setItem("token", "");
 
-  try {
-    const response = await GetDataFromAPI({
-      url: "/auth/logout",
-      method: "POST",
-    });
-    if (response.ok!) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    // handleLogout();
-    // dispatch(login());
-    localStorage.removeItem("token");
-    // dispatch(setToken(""));
-  } catch (e) {
-    console.log(e);
-  }
+      // dispatch(LogoutThunk());
+      // handleLogout();
+      await dispatch(NavThunk());
+    };
+    fetchData();
+  }, []);
 };

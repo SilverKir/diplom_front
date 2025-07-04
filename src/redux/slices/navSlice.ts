@@ -1,25 +1,43 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import { ILoginAction } from "../../interfaces";
-import { GetNav } from "../../scripts";
+import { NavThunk } from "../thunks/NavThunk";
 
 export interface NavState {
-  navActions: ILoginAction[];
+  actions: {
+    isAuth: boolean;
+    nav: ILoginAction[];
+  };
+  loading: boolean;
+  error: string | undefined | null;
 }
 
 const initialState = {
-  navActions: await GetNav(),
+  actions: { isAuth: false, nav: [] },
+  loading: false,
+  error: null,
 } as NavState;
 
 export const navSlice = createSlice({
   name: "navigate",
   initialState,
-  reducers: {
-    getNav: (state, action) => {
-      state.navActions = action.payload;
+  reducers: {},
+   extraReducers: (builder) => {
+      builder
+        .addCase(NavThunk.pending, (state) => {
+          state.loading = true;
+          state.error = null;
+        })
+        .addCase(NavThunk.fulfilled, (state, action) => {
+          state.loading = false;
+          state.error = null;
+          state.actions = action.payload;
+        })
+        .addCase(NavThunk.rejected, (state, action) => {
+          state.loading = false;
+          state.error = action.error.message;
+        });
     },
-  },
 });
 
-export const { getNav } = navSlice.actions;
 export default navSlice.reducer;

@@ -1,18 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ILoginAction } from "../../interfaces";
-import { GetNav } from "../../scripts";
 import { Auth } from "../thunks/AuthThunk";
-import { NavThunk } from "../thunks/NavThunk";
+import { LogoutThunk } from "../thunks/LogoutThunk";
 
 export interface AuthState {
-  actions: { isAuth: boolean; nav: ILoginAction[] };
   authToken: string | null;
   loading: boolean;
-  error: string | null;
+  error: string | undefined | null;
 }
 
 const initialState = {
-  actions: await GetNav(),
   authToken: localStorage.getItem("token") || null,
   loading: false,
   error: null,
@@ -37,7 +33,20 @@ export const authSlice = createSlice({
       .addCase(Auth.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
-        console.log(action.error);
+      })
+      .addCase(LogoutThunk.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(LogoutThunk.fulfilled, (state) => {
+        state.loading = false;
+        state.error = null;
+        state.authToken = ""
+        localStorage.removeItem("token");
+      })
+      .addCase(LogoutThunk.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
       });
   },
 });

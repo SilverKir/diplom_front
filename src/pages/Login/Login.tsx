@@ -2,12 +2,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { useContext, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { logout } from "../../redux/slices/loginSlice";
-import { GetError, GetNav, SetAuth } from "../../scripts";
-import { setToken } from "../../redux/slices/tokenSlice";
+import { GetError } from "../../scripts";
 import { LoginForm } from "../../components/Custom/LoginForm";
-import { getNav } from "../../redux";
+
 import { Auth } from "../../redux/thunks/AuthThunk";
+import { NavThunk } from "../../redux/thunks/NavThunk";
 
 export interface authResponse {
   id: string;
@@ -22,42 +21,24 @@ export const Login = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { handleAuth } = useContext(AuthContext);
-  const [hasError, setError] = useState<string>("");
   const { loading, error } = useAppSelector((state) => state.authActions);
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
-  const [isLoading, setLoading] = useState<boolean>(false);
 
   const fromPage = location.state?.from;
 
   const HandleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(Auth(form));
-
-    // try {
-    //   setLoading(true);
-    //   const response = await SetAuth(form);
-    //   if (!response.ok) {
-    //     if (response.status === 403) {
-    //       dispatch(logout());
-    //     }
-    //     throw new Error(GetError(response.status));
-    //   }
-    //   setError("");
-    //   const data = await response.json();
-    //   handleAuth();
-    //   localStorage.setItem("token", data.token);
-    //   dispatch(logout());
-    //   dispatch(setToken(data.token));
-    //   dispatch(getNav(await GetNav()));
-    //   setLoading(false);
-    // navigate(`${fromPage ? fromPage : "/"}`);
-    // } catch (e) {
-    //   setError(e.message);
-    //   setLoading(false);
-    // }
+    await dispatch(Auth(form));
+    handleAuth();
+    dispatch(NavThunk());
+    console.log(error);
+    if (error!) {
+      console.log("kjhgjhgjh");
+      navigate(`/`);
+    }
   };
 
   return (
@@ -66,7 +47,7 @@ export const Login = () => {
         form={form}
         setForm={setForm}
         onSubmit={HandleLogin}
-        isError={error ? error : undefined}
+        isError={error ? GetError(error) : undefined}
         isLoading={loading}
       />
     </>
