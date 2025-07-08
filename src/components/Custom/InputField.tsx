@@ -3,7 +3,7 @@ type InputFieldProps = {
   className?: string | undefined;
   type: string;
   name: string;
-  value: string;
+  value?: string;
   placeholder: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   isError?: string;

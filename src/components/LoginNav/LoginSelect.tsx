@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import classes from "./loginSelect.module.css";
 import { ILoginAction } from "../../interfaces";
 
@@ -13,6 +13,7 @@ export const LoginSelect = (props: { actions: ILoginAction[] }) => {
 
   const dispatch = useAppDispatch();
   const { handleLogout } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const Logout = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
@@ -22,6 +23,7 @@ export const LoginSelect = (props: { actions: ILoginAction[] }) => {
       .then(() => {
         handleLogout();
         dispatch(NavThunk());
+        navigate(`/`);
       });
   };
 

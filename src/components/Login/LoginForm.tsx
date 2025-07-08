@@ -28,29 +28,36 @@ export const LoginForm = (props: LoginFormProps) => {
     .email(WRONG_EMAIL_FORMAT)
     .required(REQUIRED_EMAIL);
   const passwordSchema = yup.string().min(6, MIN_SYMBOLS_IN_PASSWORD + 6);
+  
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     props.setForm((prevForm) => ({
       ...prevForm,
       [name]: value,
     }));
+
+    const Errors = [...hasError];
+    const Checked = [...isChecked];
+
     if (name === "email") {
       try {
         emailSchema.validateSync(value);
-        setError(["", hasError[1]]);
-        setChecked([true, isChecked[1]]);
+        Errors[0] = "";
+        Checked[0] = true;
       } catch (err) {
-        setError([err.errors, hasError[1]]);
+        Errors[0] = err.errors;
       }
     } else {
       try {
         passwordSchema.validateSync(value);
-        setError([hasError[0], ""]);
-        setChecked([isChecked[0], true]);
+        Errors[1] = "";
+        Checked[1] = true;
       } catch (err) {
-        setError([hasError[0], err.errors]);
+        Errors[1] = err.errors;
       }
     }
+    setError(Errors);
+    setChecked(Checked);
   };
 
   const handleNullLogin = async (e: React.FormEvent<HTMLFormElement>) => {

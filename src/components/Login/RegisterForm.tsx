@@ -2,55 +2,73 @@ import { useState, Dispatch, SetStateAction } from "react";
 import { Link } from "react-router-dom";
 import { InputField } from "../Custom/InputField";
 import classes from "./registerForm.module.css";
-import { ILoginData } from "../../interfaces";
+import { IRegisterData } from "../../interfaces";
 import * as yup from "yup";
 import {
   MIN_SYMBOLS_IN_PASSWORD,
   WRONG_EMAIL_FORMAT,
   REQUIRED_EMAIL,
+  NAME_REQUIRED,
 } from "../../constants";
 import { CustomButton } from "../Custom/CustomButton";
 
-type LoginFormProps = {
+type RegisterFormProps = {
   className?: string;
   isError?: string;
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
-  form: ILoginData;
-  setForm: Dispatch<SetStateAction<ILoginData>>;
+  form: IRegisterData;
+  setForm: Dispatch<SetStateAction<IRegisterData>>;
   isLoading?: boolean;
 };
 
-export const RegisterForm = (props: LoginFormProps) => {
+export const RegisterForm = (props: RegisterFormProps) => {
   const [hasError, setError] = useState<string[]>([]);
-  const [isChecked, setChecked] = useState<boolean[]>([false, false]);
+  const [isChecked, setChecked] = useState<boolean[]>([false, false, false]);
   const emailSchema = yup
     .string()
     .email(WRONG_EMAIL_FORMAT)
     .required(REQUIRED_EMAIL);
   const passwordSchema = yup.string().min(6, MIN_SYMBOLS_IN_PASSWORD + 6);
+  const nameSchema = yup.string().required(NAME_REQUIRED);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     props.setForm((prevForm) => ({
       ...prevForm,
       [name]: value,
     }));
+
+    const Errors = [...hasError];
+    const Checked = [...isChecked];
+
     if (name === "email") {
       try {
         emailSchema.validateSync(value);
-        setError(["", hasError[1]]);
-        setChecked([true, isChecked[1]]);
+        Errors[0] = "";
+        Checked[0] = true;
       } catch (err) {
-        setError([err.errors, hasError[1]]);
+        Errors[0] = err.errors;
       }
-    } else {
+    } else if (name === "password") {
       try {
         passwordSchema.validateSync(value);
-        setError([hasError[0], ""]);
-        setChecked([isChecked[0], true]);
+        Errors[1] = "";
+        Checked[1] = true;
       } catch (err) {
-        setError([hasError[0], err.errors]);
+        Errors[1] = err.errors;
+      }
+    } else if (name === "name") {
+      try {
+        nameSchema.validateSync(value);
+        Errors[2] = "";
+        Checked[2] = true;
+      } catch (err) {
+        Errors[2] = err.errors;
       }
     }
+
+    setError(Errors);
+    setChecked(Checked);
   };
 
   const handleNullLogin = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -58,22 +76,28 @@ export const RegisterForm = (props: LoginFormProps) => {
 
     let emailError = "";
     let passwordError = "";
+    let nameError = "";
     if (isChecked[0] == false) {
       emailError = REQUIRED_EMAIL;
     }
     if (isChecked[1] == false) {
       passwordError = MIN_SYMBOLS_IN_PASSWORD + 6;
     }
-    setError([emailError, passwordError]);
+    if (isChecked[2] == false) {
+      nameError = NAME_REQUIRED;
+    }
+    setError([emailError, passwordError, nameError]);
   };
 
   return (
     <>
       <form
-        className={classes["login-form"]}
+        className={classes["register-form"]}
         autoComplete="on"
         onSubmit={
-          isChecked[0] && isChecked[1] ? props.onSubmit : handleNullLogin
+          isChecked[0] && isChecked[1] && isChecked[2]
+            ? props.onSubmit
+            : handleNullLogin
         }
       >
         <div className={classes["login-registration-selection"]}>
@@ -102,11 +126,29 @@ export const RegisterForm = (props: LoginFormProps) => {
           isError={hasError[1]}
           isChecked={isChecked[1]}
         />
+        <InputField
+          className={classes["form-data"]}
+          type="text"
+          name="name"
+          value={props.form.name}
+          placeholder="Введите имя"
+          onChange={handleChange}
+          isError={hasError[2]}
+          isChecked={isChecked[2]}
+        />
+        <InputField
+          className={classes["form-data"]}
+          type="text"
+          name="contactPhone"
+          value={props.form.contactPhone}
+          placeholder="Введите телефон"
+          onChange={handleChange}
+        />
 
         <CustomButton
           className={classes["form-data"]}
           type="submit"
-          text="Войти"
+          text="Зарегистрироваться"
           isLoading={props.isLoading}
         />
         <div className={classes["error-message"]}>
