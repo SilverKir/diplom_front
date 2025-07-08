@@ -12,7 +12,6 @@ export const Nav = (props: { actions: ILoginAction[] }) => {
               className={classes["nav-link"]}
               key={action?.id}
               to={action?.link ? action?.link : "#"}
-              onClick={action?.action ? action.action : undefined}
             >
               &gt; {action?.name}
             </NavLink>

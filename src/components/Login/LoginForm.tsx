@@ -1,6 +1,6 @@
 import { useState, Dispatch, SetStateAction } from "react";
 import { Link } from "react-router-dom";
-import { InputField } from "./InputField";
+import { InputField } from "../Custom/InputField";
 import classes from "./loginForm.module.css";
 import { ILoginData } from "../../interfaces";
 import * as yup from "yup";
@@ -8,8 +8,8 @@ import {
   MIN_SYMBOLS_IN_PASSWORD,
   WRONG_EMAIL_FORMAT,
   REQUIRED_EMAIL,
-} from "../../constants/";
-import { CustomButton } from "./CustomButton";
+} from "../../constants";
+import { CustomButton } from "../Custom/CustomButton";
 
 type LoginFormProps = {
   className?: string;
@@ -71,7 +71,7 @@ export const LoginForm = (props: LoginFormProps) => {
     <>
       <form
         className={classes["login-form"]}
-        autoComplete="off"
+        autoComplete="on"
         onSubmit={
           isChecked[0] && isChecked[1] ? props.onSubmit : handleNullLogin
         }

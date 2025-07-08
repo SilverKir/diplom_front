@@ -1,1 +1,2 @@
-export { getNav } from "./slices/navSlice";
+export { Auth } from "./thunks/AuthThunk";
+export { NavThunk } from "./thunks/NavThunk";

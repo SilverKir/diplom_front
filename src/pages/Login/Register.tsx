@@ -1,10 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../context";
+import { AuthContext } from "../../context/AuthContext";
 import { useContext, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { GetError } from "../../scripts";
-import { LoginForm } from "../../components";
-import { Auth, NavThunk } from "../../redux";
+import { RegisterForm } from "../../components";
+
+import { Auth } from "../../redux/thunks/AuthThunk";
+import { NavThunk } from "../../redux/thunks/NavThunk";
 
 export interface authResponse {
   id: string;
@@ -14,7 +16,7 @@ export interface authResponse {
   token: string;
 }
 
-export const Login = () => {
+export const Register = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { handleAuth } = useContext(AuthContext);
@@ -37,7 +39,7 @@ export const Login = () => {
 
   return (
     <>
-      <LoginForm
+      <RegisterForm
         form={form}
         setForm={setForm}
         onSubmit={HandleLogin}
