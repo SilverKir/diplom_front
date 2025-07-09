@@ -8,12 +8,10 @@ import { RegisterForm } from "../../components";
 import { Auth } from "../../redux/thunks/AuthThunk";
 import { NavThunk } from "../../redux/thunks/NavThunk";
 
-export interface authResponse {
+export interface regResponse {
   id: string;
   email: string;
   name: string;
-  contactPhone: string;
-  token: string;
 }
 
 export const Register = () => {
@@ -24,6 +22,8 @@ export const Register = () => {
   const [form, setForm] = useState({
     email: "",
     password: "",
+    name: "",
+    contactPhone: "",
   });
 
   const HandleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -41,7 +41,8 @@ export const Register = () => {
     <>
       <RegisterForm
         form={form}
-        setForm={setForm}
+        set
+        Form={setForm}
         onSubmit={HandleLogin}
         isError={error ? GetError(error) : undefined}
         isLoading={loading}

@@ -48,6 +48,7 @@ export const RegisterForm = (props: RegisterFormProps) => {
         Checked[0] = true;
       } catch (err) {
         Errors[0] = err.errors;
+        Checked[0] = false;
       }
     } else if (name === "password") {
       try {
@@ -56,6 +57,7 @@ export const RegisterForm = (props: RegisterFormProps) => {
         Checked[1] = true;
       } catch (err) {
         Errors[1] = err.errors;
+        Checked[1] = false;
       }
     } else if (name === "name") {
       try {
@@ -64,6 +66,7 @@ export const RegisterForm = (props: RegisterFormProps) => {
         Checked[2] = true;
       } catch (err) {
         Errors[2] = err.errors;
+        Checked[2] = false;
       }
     }
 

@@ -28,7 +28,7 @@ export const LoginForm = (props: LoginFormProps) => {
     .email(WRONG_EMAIL_FORMAT)
     .required(REQUIRED_EMAIL);
   const passwordSchema = yup.string().min(6, MIN_SYMBOLS_IN_PASSWORD + 6);
-  
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     props.setForm((prevForm) => ({
@@ -46,6 +46,7 @@ export const LoginForm = (props: LoginFormProps) => {
         Checked[0] = true;
       } catch (err) {
         Errors[0] = err.errors;
+        Checked[0] = false;
       }
     } else {
       try {
@@ -54,6 +55,7 @@ export const LoginForm = (props: LoginFormProps) => {
         Checked[1] = true;
       } catch (err) {
         Errors[1] = err.errors;
+        Checked[1] = false;
       }
     }
     setError(Errors);
