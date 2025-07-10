@@ -18,7 +18,7 @@ export const Login = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { handleAuth } = useContext(AuthContext);
-  const { loading, error } = useAppSelector((state) => state.authActions);
+  const { loading, error } = useAppSelector((state) => state.apiAction);
   const [form, setForm] = useState({
     email: "",
     password: "",

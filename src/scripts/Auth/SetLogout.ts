@@ -1,8 +1,8 @@
-import { GetDataFromAPI } from "../index";
+import { IRequestData } from "../../interfaces";
 
-export const SetLogout = async () => {
-  return await GetDataFromAPI({
+export const SetLogout = (): IRequestData => {
+  return {
     url: "/auth/logout",
     method: "POST",
-  });
+  };
 };

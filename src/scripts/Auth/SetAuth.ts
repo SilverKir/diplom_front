@@ -1,14 +1,14 @@
-import { GetDataFromAPI } from "../index";
+import { IRequestData } from "../../interfaces";
 
 export interface authRequest {
   email: string;
   password: string;
 }
 
-export const SetAuth = async (req: authRequest) => {
-  return await GetDataFromAPI({
+export const SetAuth =  (req: authRequest): IRequestData => {
+  return {
     url: "/auth/login",
     method: "POST",
     arg: req,
-  });
+  };
 };

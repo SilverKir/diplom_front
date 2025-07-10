@@ -1,8 +1,8 @@
-import { GetDataFromAPI } from "../index";
+import { IRequestData } from "../../interfaces";
 
-export const GetNav = async () => {
-  return await GetDataFromAPI({
+export const GetNav = (): IRequestData => {
+  return {
     url: "/nav",
     method: "GET",
-  });
+  };
 };

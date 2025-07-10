@@ -1,12 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { ILoginAction } from "../../interfaces";
 import { GetNav } from "../../scripts";
+import { GetDataFromApiThunk } from "./GetDataFromApiThunk";
 
 export interface IAuthNav {
   isAuth: boolean;
   nav: ILoginAction[];
 }
-export const NavThunk = createAsyncThunk("api/nav", async () => {
-  const response = await GetNav();
-  return (await response.json()) as IAuthNav;
+export const NavThunk = createAsyncThunk("api/nav", async (_, { dispatch }) => {
+  const apiAction = await dispatch(GetDataFromApiThunk(GetNav()));
+  return apiAction.payload as IAuthNav;
 });

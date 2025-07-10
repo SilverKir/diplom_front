@@ -10,7 +10,8 @@ export const Header = () => {
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(NavThunk());
-  }, []);
+  }, [dispatch]);
+
   const { actions } = useAppSelector((state) => state.navActions);
 
   return (

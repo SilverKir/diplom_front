@@ -1,10 +1,6 @@
-const URL = import.meta.env.VITE_APP_NAMES_URL;
+import { IRequestData } from "../interfaces";
 
-export interface IRequestData {
-  url: string;
-  method: string;
-  arg?: object;
-}
+const URL = import.meta.env.VITE_APP_NAMES_URL;
 
 export const GetDataFromAPI = async (fetchParam: IRequestData) => {
   const response = await fetch(URL + fetchParam.url, {

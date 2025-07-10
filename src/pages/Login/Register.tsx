@@ -2,11 +2,12 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { useContext, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { GetError } from "../../scripts";
+import { GetError, SetRegister } from "../../scripts";
 import { RegisterForm } from "../../components";
 
 import { Auth } from "../../redux/thunks/AuthThunk";
 import { NavThunk } from "../../redux/thunks/NavThunk";
+import { GetDataFromApiThunk } from "../../redux";
 
 export interface regResponse {
   id: string;
@@ -18,7 +19,7 @@ export const Register = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { handleAuth } = useContext(AuthContext);
-  const { loading, error } = useAppSelector((state) => state.authActions);
+  const { loading, error } = useAppSelector((state) => state.apiAction);
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -28,7 +29,7 @@ export const Register = () => {
 
   const HandleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await dispatch(Auth(form))
+    await dispatch(Auth({ email: form.email, password: form.password }))
       .unwrap()
       .then(() => {
         handleAuth();
@@ -37,13 +38,21 @@ export const Register = () => {
       });
   };
 
+  const HandleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    await dispatch(GetDataFromApiThunk(SetRegister(form)))
+      .unwrap()
+      .then(() => {
+        HandleLogin(e);
+      });
+  };
+
   return (
     <>
       <RegisterForm
         form={form}
-        set
-        Form={setForm}
-        onSubmit={HandleLogin}
+        setForm={setForm}
+        onSubmit={HandleRegister}
         isError={error ? GetError(error) : undefined}
         isLoading={loading}
       />
