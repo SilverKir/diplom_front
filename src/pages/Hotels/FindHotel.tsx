@@ -17,7 +17,7 @@ export const FindHotel = () => {
   const HandleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await dispatch(
-      GetDataFromApiThunk(GetHotels({ ...form, offset: 0, limit: 10 }))
+      GetDataFromApiThunk(GetHotels({ ...form, offset: 0, limit: 100 }))
     );
   };
 
@@ -42,7 +42,7 @@ export const FindHotel = () => {
             ))}
           </ul>
         ) : (
-          
+          ""
         )}
       </div>
     </>
