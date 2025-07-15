@@ -4,6 +4,7 @@ export const ERROR_403 = "У вас отсутствуют права на до�
 export const ERROR_404 = "Данная страница не найдена !!";
 export const WRONG_EMAIL_FORMAT = "Неверный формат email";
 export const REQUIRED_EMAIL = "Email обязателен";
+export const DATE_REQUIRED = "Поле должно содержать Дату";
 export const MIN_SYMBOLS_IN_PASSWORD =
   "Минимальное количество символов в пароле: ";
 export const NAME_REQUIRED = "Имя обязательно для заполнения";
