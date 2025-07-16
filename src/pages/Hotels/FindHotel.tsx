@@ -1,9 +1,10 @@
-import { FindHotelForm, HotelListForm } from "../../components";
-import { useEffect, useState } from "react";
+import { FindHotelForm, HotelListForm, Pagination } from "../../components";
+import { useState, useRef, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { GetError, GetHotels } from "../../scripts";
 import { IFindHotelData, IHotelRoomProps } from "../../interfaces";
 import { GetDataFromApiThunk } from "../../redux";
+import { ROWS_PER_PAGE } from "../../constants";
 
 export const FindHotel = () => {
   const dispatch = useAppDispatch();
@@ -13,17 +14,39 @@ export const FindHotel = () => {
     dateStart: undefined,
     dateEnd: undefined,
   });
+  const scrollY = useRef(0);
+  const [page, setPage] = useState(0);
+
+  useEffect(() => {
+    window.scrollTo(0, scrollY.current);
+  }, [page]);
+
+  const handlePageChange = (newPage: number) => {
+    scrollY.current = 80;
+    setPage(newPage);
+  };
 
   const HandleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await dispatch(
-      GetDataFromApiThunk(GetHotels({ ...form, offset: 0, limit: 100 }))
+      GetDataFromApiThunk(
+        GetHotels({ ...form, offset: 0, limit: ROWS_PER_PAGE })
+      )
     );
   };
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+  const onPaginationClick = async (page: number) => {
+    await dispatch(
+      GetDataFromApiThunk(
+        GetHotels({
+          ...form,
+          offset: page * ROWS_PER_PAGE,
+          limit: ROWS_PER_PAGE,
+        })
+      )
+    );
+    handlePageChange(page + 1);
+  };
 
   return (
     <>
@@ -43,7 +66,8 @@ export const FindHotel = () => {
           </ul>
         ) : (
           ""
-        )}
+        )}{" "}
+        <Pagination onClick={onPaginationClick} totalPages={3} />
       </div>
     </>
   );

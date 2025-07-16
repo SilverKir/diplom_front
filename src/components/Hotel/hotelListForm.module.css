@@ -1,0 +1,25 @@
+.hotel-room-wrap {
+  margin-top: 20px;
+  display: flex;
+  width: 100%;
+  background-color: white;
+  border-radius: 16px;
+  padding: 16px;
+}
+.hotel-room-description {
+  color: gray;
+}
+
+.hotel-room-image {
+  text-align: center;
+  width: 292px;
+  height: 250px;
+  line-height: 250px;
+  border-radius: 8px;
+  background-color: gray;
+  color: white;
+}
+
+.hotel-room-info {
+  margin-left: 16px;
+}

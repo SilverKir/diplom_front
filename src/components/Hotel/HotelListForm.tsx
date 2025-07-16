@@ -6,14 +6,18 @@ export const HotelListForm = (props: IHotelRoomProps) => {
   return (
     <>
       <article className={classes["hotel-room-wrap"]}>
-        <h4>{props.hotel.title}</h4>
-        <div className={classes["hotel-room-description"]}>
-          {props.description}
-        </div>
-        <img
+        <img className={classes["hotel-room-image"]}
           src={props.images[0] ? URL + "/images/" + props.images[0] : ""}
-          alt={props.images[0] ? URL + "/images/" + props.images[0] : ""}
+          alt={
+            props.images[0] ? "room photo of hotel " + props.hotel.title : ""
+          }
         />
+        <div className={classes["hotel-room-info"]}>
+          <h4>{props.hotel.title}</h4>
+          <div className={classes["hotel-room-description"]}>
+            {props.description}
+          </div>
+        </div>
       </article>
     </>
   );

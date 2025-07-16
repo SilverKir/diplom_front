@@ -2,11 +2,11 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-  min-width: 257px;
+  width: 100%;
 }
 .nav-layot {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-start;
   width: 100%;
 }
