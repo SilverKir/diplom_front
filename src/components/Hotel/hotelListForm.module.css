@@ -5,6 +5,13 @@
   background-color: white;
   border-radius: 16px;
   padding: 16px;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.hotel-info-wrap {
+  display: flex;
+  flex-direction: column;
 }
 .hotel-room-description {
   color: gray;
@@ -22,4 +29,8 @@
 
 .hotel-room-info {
   margin-left: 16px;
+}
+.info-button {
+  margin-top: 20px;
+  width: 120px;
 }

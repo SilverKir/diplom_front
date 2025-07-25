@@ -9,6 +9,7 @@ import {
 import { useAppSelector } from "./hooks";
 import { Layout } from "./components/Layout";
 import { GetRoute } from "./scripts/Router/GetRoute";
+import { Login, Room } from "./pages";
 // import { Login } from "./pages";
 
 function App() {
@@ -20,6 +21,8 @@ function App() {
         {actions.nav.map((elem) => (
           <Route path={elem.link} element={GetRoute(elem.link)} />
         ))}
+        <Route path="*" element={<Login />} />
+        <Route path="/hotel-room/:id" element={<Room />} />
       </Route>
     )
   );

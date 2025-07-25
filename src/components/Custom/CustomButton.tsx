@@ -6,10 +6,11 @@ type IButtonProps = {
   text?: string;
   isLoading?: boolean;
   isDisable?: boolean;
+  onClick?: () => void;
 };
 
 export const CustomButton = (props: IButtonProps) => {
-  const { className, type, text, isLoading, isDisable } = props;
+  const { className, type, text, isLoading, isDisable, onClick } = props;
 
   const circle = (
     <svg
@@ -34,6 +35,7 @@ export const CustomButton = (props: IButtonProps) => {
         } `}
         type={type}
         disabled={isDisable}
+        onClick={onClick}
       >
         {text}
         <i className={classes["loader-icon"]}>{isLoading ? circle : ""}</i>

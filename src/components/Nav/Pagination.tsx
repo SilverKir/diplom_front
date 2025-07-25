@@ -1,22 +1,40 @@
+import { useState } from "react";
+import classes from "./pagination.module.css";
+
 type PaginationProps = {
   totalPages: number;
   onClick: (page: number) => Promise<void>;
 };
 
 export const Pagination = (props: PaginationProps) => {
-  return (
-    <div>
-      {Array.from({ length: props.totalPages }, (_, index) => (
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const handleClick = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+    props.onClick(pageNumber - 1);
+  };
+
+  const renderPageNumbers = () => {
+    const pageNumbers = [];
+    for (let i = 1; i <= props.totalPages; i++) {
+      pageNumbers.push(
         <button
-          key={index}
+          className={classes["pagination-button"]}
+          key={i}
           onClick={(e) => {
             e.preventDefault();
-            props.onClick(index);
+            handleClick(i);
           }}
+          disabled={currentPage === i}
         >
-          {index + 1}
+          {i}
         </button>
-      ))}
-    </div>
+      );
+    }
+    return pageNumbers;
+  };
+
+  return (
+    <div className={classes["pagination-wrap"]}>{renderPageNumbers()}</div>
   );
 };

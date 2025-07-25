@@ -3,15 +3,18 @@ import { NavLink, useNavigate } from "react-router-dom";
 import classes from "./loginSelect.module.css";
 import { ILoginAction } from "../../interfaces";
 
-import { useAppDispatch } from "../../hooks";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 import { AuthContext } from "../../context/AuthContext";
 import { LogoutThunk } from "../../redux/thunks/LogoutThunk";
 import { NavThunk } from "../../redux/thunks/NavThunk";
+import { ErrorLoad } from "../Custom/ErrorLoad";
+import { GetError } from "../../scripts";
 
 export const LoginSelect = (props: { actions: ILoginAction[] }) => {
   const [selectedOption, setSelectedOption] = useState(1);
 
   const dispatch = useAppDispatch();
+  const { loading, error } = useAppSelector((state) => state.apiAction);
   const { handleLogout } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -37,6 +40,10 @@ export const LoginSelect = (props: { actions: ILoginAction[] }) => {
   const action = getActionById(selectedOption);
   return (
     <div className={classes["header-block"]}>
+      <ErrorLoad
+        isLoading={loading}
+        errorText={error ? GetError(error) : undefined}
+      />
       <div className={classes["select-module"]}>
         <NavLink
           className={classes["select-button"]}
