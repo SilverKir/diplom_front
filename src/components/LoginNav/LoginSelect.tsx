@@ -15,6 +15,7 @@ export const LoginSelect = (props: { actions: ILoginAction[] }) => {
 
   const dispatch = useAppDispatch();
   const { loading, error } = useAppSelector((state) => state.apiAction);
+  const { actions } = useAppSelector((state) => state.navActions);
   const { handleLogout } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -37,21 +38,22 @@ export const LoginSelect = (props: { actions: ILoginAction[] }) => {
   const getActionById = (id: number) => {
     return props.actions.find((el) => el.id === id);
   };
-  const action = getActionById(selectedOption);
+  const actionLogin = getActionById(selectedOption);
   return (
     <div className={classes["header-block"]}>
       <ErrorLoad
+        text={actions.role}
         isLoading={loading}
         errorText={error ? GetError(error) : undefined}
       />
       <div className={classes["select-module"]}>
         <NavLink
           className={classes["select-button"]}
-          key={action?.id ? action?.id : "1"}
-          to={action?.link ? action?.link : "#"}
-          onClick={action?.action ? Logout : undefined}
+          key={actionLogin?.id ? actionLogin?.id : "1"}
+          to={actionLogin?.link ? actionLogin?.link : "#"}
+          onClick={actionLogin?.action ? Logout : undefined}
         >
-          {action?.name}
+          {actionLogin?.name}
         </NavLink>
         <div>
           <select

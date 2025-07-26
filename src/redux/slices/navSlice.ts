@@ -6,12 +6,13 @@ import { NavThunk } from "../thunks/NavThunk";
 export interface NavState {
   actions: {
     isAuth: boolean;
+    role: string;
     nav: ILoginAction[];
   };
 }
 
 const initialState = {
-  actions: { isAuth: false, nav: [] },
+  actions: { isAuth: false, role: "unautorized", nav: [] },
 } as NavState;
 
 export const navSlice = createSlice({

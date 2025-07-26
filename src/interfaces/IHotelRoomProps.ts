@@ -1,10 +1,10 @@
-
-
 export interface IHotelRoomProps {
-    id : string;
-   description : string;
-        images: (string|null)[];
-        hotel: {
-            id : string;
-            title: string;        }
+  id: string;
+  description: string;
+  images: (string | null)[];
+  hotel: {
+    id: string;
+    title: string;
+    description?: string;
+  };
 }

@@ -1,0 +1,31 @@
+.hotel-room-wrap {
+  margin-top: 20px;
+  background-color: white;
+  border-radius: 16px;
+}
+.hotel-wrap {
+  padding: 10px;
+}
+.hotel-name {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+.images-wrap {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  padding: 10px;
+}
+.room-wrap {
+  padding: 10px;
+}
+
+.hotel-room-image {
+  text-align: center;
+  width: 292px;
+  height: 250px;
+  line-height: 250px;
+  border-radius: 8px;
+  background-color: gray;
+  color: white;
+}

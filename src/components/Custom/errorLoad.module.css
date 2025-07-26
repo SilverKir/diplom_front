@@ -1,14 +1,14 @@
-.error-loading-wrap{
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: end;
+.error-loading-wrap {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: end;
+  padding-left: 10px;
 }
 
-.error-text{
-    color: red;
+.error-text {
+  color: red;
 }
-
 
 .loader {
   animation: rotate 2s linear infinite;
