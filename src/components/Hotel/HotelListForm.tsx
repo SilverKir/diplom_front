@@ -1,8 +1,9 @@
+import { useNavigate } from "react-router-dom";
+
 import { IHotelRoomProps } from "../../interfaces";
 import classes from "./hotelListForm.module.css";
 const URL = import.meta.env.VITE_APP_NAMES_URL;
 import { CustomButton } from "../Custom/CustomButton";
-import { useNavigate } from "react-router-dom";
 
 export const HotelListForm = (props: IHotelRoomProps) => {
   const navigate = useNavigate();

@@ -5,4 +5,5 @@ export { GetNav } from "./Nav/GetNav";
 export { SetLogout } from "./Auth/SetLogout";
 export { SetRegister } from "./Auth/SetRegister";
 export { GetHotels } from "./Hotel/GetHotels";
-export {GetHotelById}from "./Hotel/GetHotelById"
+export { GetHotelById } from "./Hotel/GetHotelById";
+export { SetReservation } from "./Reservation/SetReservation";

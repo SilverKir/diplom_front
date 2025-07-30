@@ -1,10 +1,12 @@
 export const ERROR_401 = "Введён неверный логин или пароль";
-export const ERROR_400 = "Днный e-mail уже зарегистрирован на сайте";
+export const ERROR_400 = "Данные уже зарегистрированы на сайте";
 export const ERROR_403 = "У вас отсутствуют права на доступ к данной странице";
 export const ERROR_404 = "Данная страница не найдена !!";
 export const WRONG_EMAIL_FORMAT = "Неверный формат email";
 export const REQUIRED_EMAIL = "Email обязателен";
 export const DATE_REQUIRED = "Поле должно содержать Дату";
+export const DATE_LESS_THEN_CURRENT = "Дата меньше текущей даты";
+export const DATE_LESS_THEN_START = "Дата меньше даты заезда";
 export const MIN_SYMBOLS_IN_PASSWORD =
   "Минимальное количество символов в пароле: ";
 export const NAME_REQUIRED = "Имя обязательно для заполнения";

@@ -3,7 +3,11 @@ import { InputField } from "../Custom/InputField";
 import classes from "./findHotelForm.module.css";
 import { IFindHotelData } from "../../interfaces";
 import * as yup from "yup";
-import { DATE_REQUIRED } from "../../constants";
+import {
+  DATE_REQUIRED,
+  DATE_LESS_THEN_CURRENT,
+  DATE_LESS_THEN_START,
+} from "../../constants";
 import { CustomButton } from "../Custom/CustomButton";
 
 type FindHotelFormProps = {
@@ -18,6 +22,8 @@ type FindHotelFormProps = {
 export const FindHotelForm = (props: FindHotelFormProps) => {
   const [hasError, setError] = useState<string[]>([]);
   const [isChecked, setChecked] = useState<boolean[]>([false, false]);
+  const [startDay, setStartDay] = useState(new Date(0));
+  const [endDay, setEndDay] = useState(new Date(8.64e15));
   const dateSchema = yup.date();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,12 +35,29 @@ export const FindHotelForm = (props: FindHotelFormProps) => {
 
     const Errors = [...hasError];
     const Checked = [...isChecked];
+    const currentDay = new Date();
+    currentDay.setHours(0, 0, 0, 0);
 
     if (name === "dateStart") {
       try {
         dateSchema.validateSync(value);
         Errors[0] = "";
         Checked[0] = true;
+
+        if (new Date(value) < currentDay) {
+          Errors[0] = DATE_LESS_THEN_CURRENT;
+          Checked[0] = false;
+        }
+
+        if (new Date(value) > endDay) {
+          Errors[1] = DATE_LESS_THEN_START;
+          Checked[1] = false;
+        } else if (Errors[1] === DATE_LESS_THEN_START) {
+          Errors[1] = "";
+          Checked[1] = true;
+        }
+
+        setStartDay(new Date(value));
       } catch (err) {
         Errors[0] = err.errors;
         Checked[0] = false;
@@ -44,11 +67,21 @@ export const FindHotelForm = (props: FindHotelFormProps) => {
         dateSchema.validateSync(value);
         Errors[1] = "";
         Checked[1] = true;
+        if (new Date(value) < currentDay) {
+          Errors[1] = DATE_LESS_THEN_CURRENT;
+          Checked[1] = false;
+        }
+        if (new Date(value) < startDay) {
+          Errors[1] = DATE_LESS_THEN_START;
+          Checked[1] = false;
+        }
+        setEndDay(new Date(value));
       } catch (err) {
         Errors[1] = err.errors;
         Checked[1] = false;
       }
     }
+
     setError(Errors);
     setChecked(Checked);
   };
@@ -59,10 +92,10 @@ export const FindHotelForm = (props: FindHotelFormProps) => {
     let dateStartError = "";
     let dateEndError = "";
     if (isChecked[0] == false) {
-      dateStartError = DATE_REQUIRED;
+      dateStartError = hasError[0] ? hasError[0] : DATE_REQUIRED;
     }
     if (isChecked[1] == false) {
-      dateEndError = DATE_REQUIRED;
+      dateEndError = hasError[1] ? hasError[1] : DATE_REQUIRED;
     }
     setError([dateStartError, dateEndError]);
   };

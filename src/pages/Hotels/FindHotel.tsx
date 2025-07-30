@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { GetError, GetHotels } from "../../scripts";
 import { IFindHotelData, IHotelRoomProps } from "../../interfaces";
-import { GetDataFromApiThunk } from "../../redux";
+import { GetDataFromApiThunk, setStartDate, setEndDate } from "../../redux";
 import { ROWS_PER_PAGE } from "../../constants";
 import classes from "./findHotel.module.css";
 
@@ -44,6 +44,8 @@ export const FindHotel = () => {
         GetHotels({ ...form, offset: 0, limit: ROWS_PER_PAGE })
       )
     );
+    dispatch(setStartDate(form.dateStart));
+    dispatch(setEndDate(form.dateEnd));
   };
 
   const onPaginationClick = async (clickPage: number) => {
