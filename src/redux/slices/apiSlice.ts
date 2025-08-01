@@ -16,7 +16,17 @@ const initialState = {
 export const apiSlice = createSlice({
   name: "api",
   initialState,
-  reducers: {},
+  reducers: {
+    SetNullData: (state) => {
+      state.data = null;
+    },
+    SetError: (state, action) => {
+      state.error = action.payload;
+    },
+    SetLoading: (state, action) => {
+      state.loading = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(GetDataFromApiThunk.pending, (state) => {
@@ -35,4 +45,5 @@ export const apiSlice = createSlice({
   },
 });
 
+export const { SetError, SetLoading, SetNullData } = apiSlice.actions;
 export default apiSlice.reducer;

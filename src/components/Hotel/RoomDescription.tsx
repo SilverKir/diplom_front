@@ -2,33 +2,39 @@ import { useNavigate } from "react-router-dom";
 import { IHotelRoomProps } from "../../interfaces";
 import { CustomButton } from "../Custom/CustomButton";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { GetDataFromApiThunk, setRoom } from "../../redux";
+import { SetError, setRoom } from "../../redux";
 import classes from "./roomDesrciption.module.css";
-import { SetReservation } from "../../scripts";
+import { SetReservation, GetDataFromAPI } from "../../scripts";
 
 const URL = import.meta.env.VITE_APP_NAMES_URL;
 
 export const RoomDescription = (props: IHotelRoomProps) => {
   const dispatch = useAppDispatch();
   const { actions } = useAppSelector((state) => state.navActions);
-  const { startDate, endDate, roomId } = useAppSelector(
-    (state) => state.dateAction
-  );
+  const { startDate, endDate } = useAppSelector((state) => state.dateAction);
   const navigate = useNavigate();
-  const handleReserve = () => {
+  const handleReserve = async () => {
     if (!actions.isAuth) {
       dispatch(setRoom(props.id));
-      navigate(`/login/`);
+      dispatch(SetError(4035));
+      navigate(`/register/`);
     } else if (actions.role === "client") {
-      dispatch(
-        GetDataFromApiThunk(
+      try {
+        await GetDataFromAPI(
           SetReservation({
             hotelRoom: props.id,
             startDate: startDate.toString(),
             endDate: endDate.toString(),
           })
-        )
-      );
+        );
+      } catch (e) {
+        if (e.message === 400) {
+          dispatch(SetError(4005));
+        } else {
+          dispatch(SetError(e.message));
+        }
+      }
+
       navigate(`/client/reservations`);
     }
   };

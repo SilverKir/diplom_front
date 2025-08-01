@@ -7,7 +7,7 @@ export interface ChooseDates {
 }
 
 const initialState = {
-  startDate: new Date(0),
+  startDate: new Date(-8.64e15),
   endDate: new Date(8.64e15),
   roomId: "",
 } as ChooseDates;

@@ -19,7 +19,7 @@ export const FindHotel = () => {
   const [page, setPage] = useState(2);
   const [notFirstPage, setNotFirstPage] = useState(false);
   const [morePage, setMorePage] = useState(true);
-
+  const [updated, setUpdated] = useState(false);
   const handlePageChange = (newPage: number) => {
     window.scrollTo(0, 80);
     setNotFirstPage(true);
@@ -44,6 +44,7 @@ export const FindHotel = () => {
         GetHotels({ ...form, offset: 0, limit: ROWS_PER_PAGE })
       )
     );
+    setUpdated(true);
     dispatch(setStartDate(form.dateStart));
     dispatch(setEndDate(form.dateEnd));
   };
@@ -71,24 +72,28 @@ export const FindHotel = () => {
         isLoading={loading}
       />
       <div>
-        {data && Object.prototype.toString.call(data) === "[object Array]" ? (
-          <>
-            <ul>
-              {data.map((item: IHotelRoomProps, index: number) => (
-                <li key={index}>{<HotelListForm {...item} />}</li>
-              ))}
-            </ul>
+        {updated ? (
+          data && Object.prototype.toString.call(data) === "[object Array]" ? (
+            <>
+              <ul>
+                {data.map((item: IHotelRoomProps, index: number) => (
+                  <li key={index}>{<HotelListForm {...item} />}</li>
+                ))}
+              </ul>
 
-            {(notFirstPage || data.length === ROWS_PER_PAGE) && (
-              <div className={classes["pagination"]}>
-                <Pagination onClick={onPaginationClick} totalPages={page} />
-                <div>{morePage && "..."}</div>
-              </div>
-            )}
-          </>
+              {(notFirstPage || data.length === ROWS_PER_PAGE) && (
+                <div className={classes["pagination"]}>
+                  <Pagination onClick={onPaginationClick} totalPages={page} />
+                  <div>{morePage && "..."}</div>
+                </div>
+              )}
+            </>
+          ) : (
+            ""
+          )
         ) : (
           ""
-        )}{" "}
+        )}
       </div>
     </>
   );

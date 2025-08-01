@@ -1,4 +1,11 @@
-import { ERROR_400, ERROR_401, ERROR_403, ERROR_404 } from "../../constants";
+import {
+  ERROR_400,
+  ERROR_401,
+  ERROR_403,
+  ERROR_404,
+  ERROR_4035,
+  ERROR_4005,
+} from "../../constants";
 
 export const GetError = (err: string | number): string => {
   const error = Number(err);
@@ -11,6 +18,10 @@ export const GetError = (err: string | number): string => {
       return ERROR_403;
     case 404:
       return ERROR_404;
+    case 4035:
+      return ERROR_4035;
+    case 4005:
+      return ERROR_4005;
 
     default:
       return "Unknown error " + error;

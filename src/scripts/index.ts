@@ -7,3 +7,4 @@ export { SetRegister } from "./Auth/SetRegister";
 export { GetHotels } from "./Hotel/GetHotels";
 export { GetHotelById } from "./Hotel/GetHotelById";
 export { SetReservation } from "./Reservation/SetReservation";
+export { GetReservation } from "./Reservation/GetReservation";
