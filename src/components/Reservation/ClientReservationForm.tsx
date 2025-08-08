@@ -1,6 +1,13 @@
 import { IClientReservation } from "../../interfaces";
+import { DeleteReservationById } from "../../scripts";
+import { useAppDispatch } from "../../hooks";
+import { GetDataFromApiThunk } from "../../redux";
 
-export const ClientReservationForm = (props: IClientReservation) => {
+export const ClientReservationForm = (props: {
+  data: IClientReservation;
+  updated: () => void;
+}) => {
+  const dispatch = useAppDispatch();
   const ConvertDate = (date: string): string => {
     const result = new Date(date);
     return result.toLocaleDateString("ru-RU", {
@@ -10,11 +17,18 @@ export const ClientReservationForm = (props: IClientReservation) => {
     });
   };
 
+  const DeleteReserve = async () => {
+    await dispatch(GetDataFromApiThunk(DeleteReservationById(props.data.id)));
+    console.log("kjhkjk");
+    props.updated();
+  };
+
   return (
     <>
-      <td>{props.hotel.title}</td>
-      <td> {ConvertDate(props.startDate)}</td>
-      <td> {ConvertDate(props.endDate)}</td>
+      <td>{props.data.hotel.title}</td>
+      <td> {ConvertDate(props.data.startDate)}</td>
+      <td> {ConvertDate(props.data.endDate)}</td>
+      <button onClick={DeleteReserve}>del</button>
     </>
   );
 };

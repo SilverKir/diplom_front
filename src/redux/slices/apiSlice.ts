@@ -36,7 +36,7 @@ export const apiSlice = createSlice({
       .addCase(GetDataFromApiThunk.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        state.data = action.payload;
+        state.data = action.payload ? action.payload : null;
       })
       .addCase(GetDataFromApiThunk.rejected, (state, action) => {
         state.loading = false;

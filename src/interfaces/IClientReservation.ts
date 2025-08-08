@@ -1,4 +1,5 @@
 export interface IClientReservation {
+  id:string;
   startDate: string;
   endDate: string;
   hotelRoom: {
