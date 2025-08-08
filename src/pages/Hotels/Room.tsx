@@ -15,7 +15,7 @@ export const Room = () => {
       setUpdated(true);
     }
     fetchData();
-  }, [dispatch]);
+  }, []);
   const { data } = useAppSelector((state) => state.apiAction);
 
   return <>{updated ? <RoomDescription {...data} /> : ""}</>;

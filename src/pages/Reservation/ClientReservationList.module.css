@@ -12,3 +12,7 @@
 .table-wrap {
   width: 100%;
 }
+
+tr:nth-child(even) {
+  background-color: rgb(223, 231, 231);
+}

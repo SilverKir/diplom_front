@@ -1,0 +1,11 @@
+td {
+  text-align: center;
+  vertical-align: middle;
+}
+.trash {
+  width: 20px;
+  height: 15px;
+}
+.trash-button {
+  padding: 1px 6px 1px 6px;
+}

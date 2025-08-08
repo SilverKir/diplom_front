@@ -5,6 +5,7 @@ import {
   ERROR_404,
   ERROR_4035,
   ERROR_4005,
+  ERROR_4006,
 } from "../../constants";
 
 export const GetError = (err: string | number): string => {
@@ -22,6 +23,8 @@ export const GetError = (err: string | number): string => {
       return ERROR_4035;
     case 4005:
       return ERROR_4005;
+    case 4006:
+      return ERROR_4006;
 
     default:
       return "Unknown error " + error;

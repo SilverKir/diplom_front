@@ -13,7 +13,6 @@ export const ClientReservationList = () => {
   const { data } = useAppSelector((state) => state.apiAction);
   const { name } = useAppSelector((state) => state.authActions);
   const UpdatePage = () => {
-    console.log(updated);
     setUpdated(false);
   };
 
@@ -49,7 +48,8 @@ export const ClientReservationList = () => {
                         <td>{index + 1}</td>
                         {
                           <ClientReservationForm
-                            {...{ data: { ...item }, updated: { UpdatePage } }}
+                            reservationData={item}
+                            UpdateList={UpdatePage}
                           />
                         }
                       </tr>
