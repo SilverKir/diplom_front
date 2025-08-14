@@ -5,3 +5,5 @@ export type { IRequestData } from "./IRequestData";
 export type { IFindHotelData } from "./IFindHotelData";
 export type { IHotelRoomProps } from "./IHotelRoomProps";
 export type { IClientReservation } from "./IClientReservation";
+export type { IFindUser } from "./IFindUser";
+export type { IUser } from "./IUser";

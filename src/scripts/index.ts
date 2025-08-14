@@ -9,3 +9,4 @@ export { GetHotelById } from "./Hotel/GetHotelById";
 export { SetReservation } from "./Reservation/SetReservation";
 export { GetReservation } from "./Reservation/GetReservation";
 export { DeleteReservationById } from "./Reservation/DeleteReservationById";
+export { GetUsers } from "./User/GetUsers";
