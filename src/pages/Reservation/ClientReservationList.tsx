@@ -1,14 +1,15 @@
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { GetDataFromApiThunk } from "../../redux";
-import { GetReservation } from "../../scripts";
+import { GetReservation, GetUserReservationById } from "../../scripts";
 import { IClientReservation } from "../../interfaces";
 import { ClientReservationForm } from "../../components";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import classes from "./ClientReservationList.module.css";
 
 export const ClientReservationList = () => {
+  const { id } = useParams();
   const [updated, setUpdated] = useState(false);
-
   const dispatch = useAppDispatch();
   const { data } = useAppSelector((state) => state.apiAction);
   const { name } = useAppSelector((state) => state.authActions);
@@ -18,11 +19,16 @@ export const ClientReservationList = () => {
 
   useEffect(() => {
     async function fetchData() {
-      dispatch(GetDataFromApiThunk(GetReservation()));
-      setUpdated(true);
+      if (id) {
+        await dispatch(GetDataFromApiThunk(GetUserReservationById(id)));
+        setUpdated(true);
+      } else {
+        await dispatch(GetDataFromApiThunk(GetReservation()));
+        setUpdated(true);
+      }
     }
     fetchData();
-  }, [dispatch, updated]);
+  }, [updated]);
 
   return (
     <>

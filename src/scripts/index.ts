@@ -10,3 +10,4 @@ export { SetReservation } from "./Reservation/SetReservation";
 export { GetReservation } from "./Reservation/GetReservation";
 export { DeleteReservationById } from "./Reservation/DeleteReservationById";
 export { GetUsers } from "./User/GetUsers";
+export { GetUserReservationById } from "./Reservation/GetUserReservationById";

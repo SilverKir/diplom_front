@@ -1,10 +1,10 @@
 export interface IClientReservation {
-  id:string;
+  id: string;
   startDate: string;
   endDate: string;
   hotelRoom: {
     description: string;
-    images: string;
+    images: string[];
   };
   hotel: {
     title: string;

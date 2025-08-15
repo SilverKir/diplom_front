@@ -1,0 +1,9 @@
+.pagination {
+  display: flex;
+  align-items: flex-end;
+  gap: 5px;
+  font-size: 1em;
+}
+.table-wrap {
+  width: 100%;
+}

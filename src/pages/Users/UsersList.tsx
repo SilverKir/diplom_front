@@ -21,10 +21,13 @@ export const UsersList = (props: { role: string }) => {
   });
 
   const [page, setPage] = useState(2);
+  const [currentPage, setCurrentPage] = useState(0);
   const [notFirstPage, setNotFirstPage] = useState(false);
   const [morePage, setMorePage] = useState(true);
   const [updated, setUpdated] = useState(false);
+
   const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
     window.scrollTo(0, 80);
     setNotFirstPage(true);
     if (data && Object.prototype.toString.call(data) === "[object Array]") {
@@ -91,7 +94,7 @@ export const UsersList = (props: { role: string }) => {
                 <tbody>
                   {data.map((item: IUser, index: number) => (
                     <tr>
-                      <td>{index + 1 + clickPage * ROWS_PER_PAGE}</td>
+                      <td>{index + 1 + currentPage * ROWS_PER_PAGE}</td>
                       {<UserListForm user={item} role={role} />}
                     </tr>
                   ))}
