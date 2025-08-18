@@ -50,9 +50,10 @@ export const RoomDescription = (props: IHotelRoomProps) => {
         </div>
         <div className={classes["room-wrap"]}>
           <div className={classes["images-wrap"]}>
-            {props.images.map((image) => {
+            {props.images.map((image, index) => {
               return (
                 <img
+                  key={index}
                   className={classes["hotel-room-image"]}
                   src={image ? URL + "/images/" + image : ""}
                   alt={image ? "room photo of hotel " + props.description : ""}

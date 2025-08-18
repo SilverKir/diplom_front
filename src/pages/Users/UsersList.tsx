@@ -70,7 +70,6 @@ export const UsersList = (props: { role: string }) => {
 
   return (
     <>
-      <div>{role}</div>
       <FindUserForm
         form={form}
         setForm={setForm}
@@ -79,8 +78,9 @@ export const UsersList = (props: { role: string }) => {
         isLoading={loading}
       />
       <div>
-        {updated ? (
-          data && Object.prototype.toString.call(data) === "[object Array]" ? (
+        {updated &&
+          data &&
+          Object.prototype.toString.call(data) === "[object Array]" && (
             <>
               <table className={classes["table-wrap"]}>
                 <thead>
@@ -93,7 +93,7 @@ export const UsersList = (props: { role: string }) => {
                 </thead>
                 <tbody>
                   {data.map((item: IUser, index: number) => (
-                    <tr>
+                    <tr key={item.id}>
                       <td>{index + 1 + currentPage * ROWS_PER_PAGE}</td>
                       {<UserListForm user={item} role={role} />}
                     </tr>
@@ -108,12 +108,7 @@ export const UsersList = (props: { role: string }) => {
                 </div>
               )}
             </>
-          ) : (
-            ""
-          )
-        ) : (
-          ""
-        )}
+          )}
       </div>
     </>
   );

@@ -4,3 +4,4 @@ export { LogoutThunk } from "./thunks/LogoutThunk";
 export { GetDataFromApiThunk } from "./thunks/GetDataFromApiThunk";
 export { setEndDate, setStartDate, setRoom } from "./slices/dateSlice";
 export { SetError, SetLoading, SetNullData } from "./slices/apiSlice";
+export { SetTempData } from "./slices/tempSlice";

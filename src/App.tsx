@@ -18,8 +18,8 @@ function App() {
   const routes = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<Layout />}>
-        {actions.nav.map((elem) => (
-          <Route path={elem.link} element={GetRoute(elem.link)} />
+        {actions.nav.map((elem, index) => (
+          <Route path={elem.link} element={GetRoute(elem.link)} key={index} />
         ))}
         <Route path="*" element={<Login />} />
         <Route path="/hotel-room/:id" element={<Room />} />

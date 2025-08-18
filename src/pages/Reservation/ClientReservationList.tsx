@@ -10,66 +10,67 @@ import classes from "./ClientReservationList.module.css";
 export const ClientReservationList = () => {
   const { id } = useParams();
   const [updated, setUpdated] = useState(false);
+  const [loaded, setLoaded] = useState(false);
   const dispatch = useAppDispatch();
   const { data } = useAppSelector((state) => state.apiAction);
   const { name } = useAppSelector((state) => state.authActions);
+  const { tempData } = useAppSelector((state) => state.tempAction);
+  const userName = id ? tempData : name;
+
   const UpdatePage = () => {
-    setUpdated(false);
+    setLoaded(false);
+    setUpdated(!updated);
   };
 
   useEffect(() => {
     async function fetchData() {
       if (id) {
         await dispatch(GetDataFromApiThunk(GetUserReservationById(id)));
-        setUpdated(true);
       } else {
         await dispatch(GetDataFromApiThunk(GetReservation()));
-        setUpdated(true);
       }
+      setLoaded(true);
     }
     fetchData();
   }, [updated]);
 
   return (
     <>
-      {updated ? (
+      {loaded && (
         <div className={classes["form-wrap"]}>
-          <h2 className={classes["name-title"]}>{name}</h2>
+          <h2 className={classes["name-title"]}>{userName}</h2>
           <div>
             {data &&
-            Object.prototype.toString.call(data) === "[object Array]" ? (
-              <>
-                <table className={classes["table-wrap"]}>
-                  <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>Отель</th>
-                      <th>Дата заезда</th>
-                      <th>Дата выезда</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {data.map((item: IClientReservation, index: number) => (
+              Object.prototype.toString.call(data) === "[object Array]" && (
+                <>
+                  <table className={classes["table-wrap"]}>
+                    <thead>
                       <tr>
-                        <td>{index + 1}</td>
-                        {
-                          <ClientReservationForm
-                            reservationData={item}
-                            UpdateList={UpdatePage}
-                          />
-                        }
+                        <th>ID</th>
+                        <th>Отель</th>
+                        <th>Дата заезда</th>
+                        <th>Дата выезда</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </>
-            ) : (
-              ""
-            )}{" "}
+                    </thead>
+                    <tbody>
+                      {data.map((item: IClientReservation, index: number) => (
+                        <tr>
+                          <td>{index + 1}</td>
+                          {
+                            <ClientReservationForm
+                              reservationData={item}
+                              UpdateList={UpdatePage}
+                              key={item.id}
+                            />
+                          }
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </>
+              )}{" "}
           </div>
         </div>
-      ) : (
-        ""
       )}
     </>
   );

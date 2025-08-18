@@ -1,14 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export interface ChooseDates {
-  startDate: Date;
-  endDate: Date;
+  startDate: string;
+  endDate: string;
   roomId: string;
 }
 
 const initialState = {
-  startDate: new Date(-8.64e15),
-  endDate: new Date(8.64e15),
+  startDate: "",
+  endDate: "",
   roomId: "",
 } as ChooseDates;
 

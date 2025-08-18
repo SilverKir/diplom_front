@@ -3,6 +3,7 @@ import navReducer from "../slices/navSlice";
 import authReducer from "../slices/authSlice";
 import apiReducer from "../slices/apiSlice";
 import dateReducer from "../slices/dateSlice";
+import tempReducer from "../slices/tempSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     authActions: authReducer,
     apiAction: apiReducer,
     dateAction: dateReducer,
+    tempAction: tempReducer
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
 });

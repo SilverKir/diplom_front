@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { IUser } from "../../interfaces";
 import classes from "./UserListForm.module.css";
+import { useAppDispatch } from "../../hooks";
+import { SetTempData } from "../../redux";
 
 type IUserListFormProps = {
   user: IUser;
@@ -10,7 +12,10 @@ type IUserListFormProps = {
 export const UserListForm = (props: IUserListFormProps) => {
   const navigate = useNavigate();
   const { user, role } = props;
+  const dispatch = useAppDispatch();
+
   const GetUserReservation = () => {
+    dispatch(SetTempData(props.user.name));
     navigate(`/manager/reservations/${props.user.id}`);
   };
 

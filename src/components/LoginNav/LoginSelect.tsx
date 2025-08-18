@@ -16,6 +16,8 @@ export const LoginSelect = (props: { actions: ILoginAction[] }) => {
   const dispatch = useAppDispatch();
   const { loading, error } = useAppSelector((state) => state.apiAction);
   const { actions } = useAppSelector((state) => state.navActions);
+  const { name } = useAppSelector((state) => state.authActions);
+
   const { handleLogout } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -42,7 +44,7 @@ export const LoginSelect = (props: { actions: ILoginAction[] }) => {
   return (
     <div className={classes["header-block"]}>
       <ErrorLoad
-        text={actions.role}
+        text={actions.role + " " + name}
         isLoading={loading}
         errorText={error ? GetError(error) : undefined}
       />

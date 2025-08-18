@@ -72,12 +72,13 @@ export const FindHotel = () => {
         isLoading={loading}
       />
       <div>
-        {updated ? (
-          data && Object.prototype.toString.call(data) === "[object Array]" ? (
+        {updated &&
+          data &&
+          Object.prototype.toString.call(data) === "[object Array]" && (
             <>
               <ul>
-                {data.map((item: IHotelRoomProps, index: number) => (
-                  <li key={index}>{<HotelListForm {...item} />}</li>
+                {data.map((item: IHotelRoomProps) => (
+                  <li key={item.id}>{<HotelListForm {...item} />}</li>
                 ))}
               </ul>
 
@@ -88,12 +89,7 @@ export const FindHotel = () => {
                 </div>
               )}
             </>
-          ) : (
-            ""
-          )
-        ) : (
-          ""
-        )}
+          )}
       </div>
     </>
   );

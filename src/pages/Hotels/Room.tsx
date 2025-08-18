@@ -18,5 +18,5 @@ export const Room = () => {
   }, []);
   const { data } = useAppSelector((state) => state.apiAction);
 
-  return <>{updated ? <RoomDescription {...data} /> : ""}</>;
+  return <>{updated && <RoomDescription {...data} />}</>;
 };

@@ -5,6 +5,7 @@ import { IFindUser } from "../../interfaces";
 import * as yup from "yup";
 import { WRONG_EMAIL_FORMAT } from "../../constants";
 import { CustomButton } from "../Custom/CustomButton";
+import { useAppSelector } from "../../hooks";
 
 type FindUserProps = {
   className?: string;
@@ -18,6 +19,7 @@ type FindUserProps = {
 export const FindUserForm = (props: FindUserProps) => {
   const [hasError, setError] = useState<string>();
   const [isChecked, setChecked] = useState<boolean>(true);
+  const { actions } = useAppSelector((state) => state.navActions);
   const emailSchema = yup.string().email(WRONG_EMAIL_FORMAT);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,6 +38,10 @@ export const FindUserForm = (props: FindUserProps) => {
         setChecked(false);
       }
     }
+  };
+
+  const AddNewUser = () => {
+    console.log("new_user");
   };
 
   return (
@@ -79,6 +85,14 @@ export const FindUserForm = (props: FindUserProps) => {
           text="Найти"
           isLoading={props.isLoading}
         />
+        {actions.role === "admin" && (
+          <CustomButton
+            className={classes["form-data"]}
+            type="button"
+            text="Добавить"
+            onClick={AddNewUser}
+          />
+        )}
         <div className={classes["error-message"]}>
           {props.isError ? props.isError : ""}
         </div>
