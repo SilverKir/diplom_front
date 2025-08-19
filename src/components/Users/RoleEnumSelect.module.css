@@ -1,0 +1,8 @@
+.select-field {
+  display: inline-flex;
+  border: 2px solid;
+  border-radius: 8px;
+  padding: 10px;
+  align-items: center;
+  height: 50px;
+}

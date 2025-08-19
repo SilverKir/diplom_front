@@ -3,4 +3,5 @@ export interface IRegisterData {
   password: string;
   name: string;
   contactPhone: string;
+  role?: string;
 }

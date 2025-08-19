@@ -14,3 +14,4 @@ export const DATE_LESS_THEN_START = "Дата меньше даты заезда
 export const MIN_SYMBOLS_IN_PASSWORD =
   "Минимальное количество символов в пароле: ";
 export const NAME_REQUIRED = "Имя обязательно для заполнения";
+export const PHONE_NOT_VALID = "Номер телефона некорректен";

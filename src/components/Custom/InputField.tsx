@@ -1,4 +1,5 @@
 import classes from "./inputField.module.css";
+
 type InputFieldProps = {
   className?: string | undefined;
   type: string;

@@ -9,8 +9,11 @@ import {
   WRONG_EMAIL_FORMAT,
   REQUIRED_EMAIL,
   NAME_REQUIRED,
+  PHONE_NOT_VALID,
 } from "../../constants";
 import { CustomButton } from "../Custom/CustomButton";
+import { RoleSelect } from "../Users/RoleEnumSelect";
+import { Role } from "../../constants/login";
 
 type RegisterFormProps = {
   className?: string;
@@ -23,13 +26,26 @@ type RegisterFormProps = {
 
 export const RegisterForm = (props: RegisterFormProps) => {
   const [hasError, setError] = useState<string[]>([]);
-  const [isChecked, setChecked] = useState<boolean[]>([false, false, false]);
+  const [isChecked, setChecked] = useState<boolean[]>([
+    false,
+    false,
+    false,
+    false,
+  ]);
+  const [currentRole, setCurrentRole] = useState<Role>(Role.Client);
   const emailSchema = yup
     .string()
     .email(WRONG_EMAIL_FORMAT)
     .required(REQUIRED_EMAIL);
   const passwordSchema = yup.string().min(6, MIN_SYMBOLS_IN_PASSWORD + 6);
   const nameSchema = yup.string().required(NAME_REQUIRED);
+  const phoneRegExp: RegExp =
+    /^(\+7|[7,8]\ ?)(\d{10}|(\(?\d{3}\)?\ ?\d{3}[\-,\ ]?\d{2}[\-,\ ]?\d{2}))$/;
+  const phoneShema = yup
+    .string()
+    .transform((value) => (value === "" ? null : value))
+    .nullable()
+    .matches(phoneRegExp, PHONE_NOT_VALID);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -68,6 +84,15 @@ export const RegisterForm = (props: RegisterFormProps) => {
         Errors[2] = err.errors;
         Checked[2] = false;
       }
+    } else if (name === "contactPhone") {
+      try {
+        phoneShema.validateSync(value);
+        Errors[3] = "";
+        Checked[3] = true;
+      } catch (err) {
+        Errors[3] = err.errors;
+        Checked[3] = false;
+      }
     }
 
     setError(Errors);
@@ -76,10 +101,10 @@ export const RegisterForm = (props: RegisterFormProps) => {
 
   const handleNullLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     let emailError = "";
     let passwordError = "";
     let nameError = "";
+    let phoneError = "";
     if (isChecked[0] == false) {
       emailError = REQUIRED_EMAIL;
     }
@@ -89,7 +114,10 @@ export const RegisterForm = (props: RegisterFormProps) => {
     if (isChecked[2] == false) {
       nameError = NAME_REQUIRED;
     }
-    setError([emailError, passwordError, nameError]);
+    if (isChecked[3] == false) {
+      phoneError = PHONE_NOT_VALID;
+    }
+    setError([emailError, passwordError, nameError, phoneError]);
   };
 
   return (
@@ -98,16 +126,18 @@ export const RegisterForm = (props: RegisterFormProps) => {
         className={classes["register-form"]}
         autoComplete="on"
         onSubmit={
-          isChecked[0] && isChecked[1] && isChecked[2]
+          isChecked[0] && isChecked[1] && isChecked[2] && isChecked[3]
             ? props.onSubmit
             : handleNullLogin
         }
       >
-        <div className={classes["login-registration-selection"]}>
-          <Link to="/login">Войти</Link>
-          <div> или </div>
-          <Link to="/register">Зарегистрироваться</Link>
-        </div>
+        {!props.form.role && (
+          <div className={classes["login-registration-selection"]}>
+            <Link to="/login">Войти</Link>
+            <div> или </div>
+            <Link to="/register">Зарегистрироваться</Link>
+          </div>
+        )}
 
         <InputField
           className={classes["form-data"]}
@@ -146,7 +176,20 @@ export const RegisterForm = (props: RegisterFormProps) => {
           value={props.form.contactPhone}
           placeholder="Введите телефон"
           onChange={handleChange}
+          isError={hasError[3]}
+          isChecked={isChecked[3]}
         />
+
+        {props.form.role && (
+          <RoleSelect
+            currentRole={currentRole}
+            name="role"
+            onChange={(e) => {
+              setCurrentRole(Role[e.target.value as keyof typeof Role]);
+              handleChange(e);
+            }}
+          />
+        )}
 
         <CustomButton
           className={classes["form-data"]}
