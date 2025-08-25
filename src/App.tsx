@@ -12,6 +12,7 @@ import { GetRoute } from "./scripts/Router/GetRoute";
 import { Login, Room } from "./pages";
 import { ClientReservationList } from "./pages/Reservation/ClientReservationList";
 
+
 function App() {
   const { actions } = useAppSelector((state) => state.navActions);
 
@@ -27,6 +28,7 @@ function App() {
           path="/manager/reservations/:id"
           element={<ClientReservationList />}
         />
+       
       </Route>
     )
   );

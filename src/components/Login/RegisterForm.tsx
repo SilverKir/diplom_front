@@ -194,7 +194,7 @@ export const RegisterForm = (props: RegisterFormProps) => {
         <CustomButton
           className={classes["form-data"]}
           type="submit"
-          text="Зарегистрироваться"
+          text={props.form.role ? "Зарегистрировать" : "Зарегистрироваться"}
           isLoading={props.isLoading}
         />
         <div className={classes["error-message"]}>

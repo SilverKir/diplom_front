@@ -20,6 +20,8 @@ export const FindHotel = () => {
   const [notFirstPage, setNotFirstPage] = useState(false);
   const [morePage, setMorePage] = useState(true);
   const [updated, setUpdated] = useState(false);
+
+  
   const handlePageChange = (newPage: number) => {
     window.scrollTo(0, 80);
     setNotFirstPage(true);

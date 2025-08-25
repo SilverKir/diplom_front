@@ -8,7 +8,7 @@ export const Nav = (props: { actions: ILoginAction[] }) => {
     <>
       <div className={classes["nav-wrap"]}>
         {props.actions.map((action) => {
-          return (
+             return (
             <NavLink
               className={classes["nav-link"]}
               key={action?.id}
@@ -17,6 +17,7 @@ export const Nav = (props: { actions: ILoginAction[] }) => {
               &gt; {action?.name}
             </NavLink>
           );
+        
         })}
       </div>
     </>

@@ -7,3 +7,4 @@ export type { IHotelRoomProps } from "./IHotelRoomProps";
 export type { IClientReservation } from "./IClientReservation";
 export type { IFindUser } from "./IFindUser";
 export type { IUser } from "./IUser";
+export type { IHotel } from "./IHotel";

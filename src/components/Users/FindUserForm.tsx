@@ -4,6 +4,7 @@ import classes from "./FindUserForm.module.css";
 import { IFindUser } from "../../interfaces";
 import { CustomButton } from "../Custom/CustomButton";
 import { useAppSelector } from "../../hooks";
+import { useNavigate } from "react-router-dom";
 
 type FindUserProps = {
   className?: string;
@@ -16,6 +17,7 @@ type FindUserProps = {
 
 export const FindUserForm = (props: FindUserProps) => {
   const { actions } = useAppSelector((state) => state.navActions);
+  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -26,7 +28,7 @@ export const FindUserForm = (props: FindUserProps) => {
   };
 
   const AddNewUser = () => {
-    console.log("new_user");
+     navigate(`/admin/new_user/`);
   };
 
   return (
@@ -61,21 +63,22 @@ export const FindUserForm = (props: FindUserProps) => {
           placeholder="Контактный телефон"
           onChange={handleChange}
         />
-
-        <CustomButton
-          className={classes["form-data"]}
-          type="submit"
-          text="Найти"
-          isLoading={props.isLoading}
-        />
-        {actions.role === "admin" && (
+        <div className={classes["buttons-wrap"]}>
           <CustomButton
             className={classes["form-data"]}
-            type="button"
-            text="Добавить"
-            onClick={AddNewUser}
+            type="submit"
+            text="Найти"
+            isLoading={props.isLoading}
           />
-        )}
+          {actions.role === "admin" && (
+            <CustomButton
+              className={classes["form-data"]}
+              type="button"
+              text="Добавить"
+              onClick={AddNewUser}
+            />
+          )}
+        </div>
         <div className={classes["error-message"]}>
           {props.isError ? props.isError : ""}
         </div>

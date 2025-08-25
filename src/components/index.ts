@@ -3,3 +3,5 @@ export { RegisterForm } from "./Login/RegisterForm";
 export { FindHotelForm, RoomDescription, HotelListForm } from "./Hotel";
 export { Pagination } from "./Nav/Pagination";
 export { ClientReservationForm } from "./Reservation/ClientReservationForm";
+export * from "./Custom/Icons"
+export * from "./Hotel"

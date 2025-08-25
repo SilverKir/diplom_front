@@ -1,0 +1,8 @@
+.buttons-wrap {
+  display: flex;
+  gap: 10px;
+}
+
+.form-data{
+  min-width: 150px;
+}
