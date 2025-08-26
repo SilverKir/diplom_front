@@ -1,0 +1,7 @@
+.buttons-wrap{
+    display: flex;
+    gap:20px;
+}
+.cancel-button{
+    background-color: orange;
+}

@@ -13,6 +13,9 @@ export const RoomDescription = (props: IHotelRoomProps) => {
   const { actions } = useAppSelector((state) => state.navActions);
   const { startDate, endDate } = useAppSelector((state) => state.dateAction);
   const navigate = useNavigate();
+
+  const canReserv = ((!actions.isAuth) || (actions.role === "client"));
+  
   const handleReserve = async () => {
     if (!actions.isAuth) {
       dispatch(setRoom(props.id));
@@ -62,13 +65,13 @@ export const RoomDescription = (props: IHotelRoomProps) => {
             })}
           </div>
           <div className={classes["room-description"]}>{props.description}</div>
-          <CustomButton
+          {canReserv&&(<CustomButton
             className={classes["info-button"]}
             type="button"
             text="Бронировать"
             onClick={handleReserve}
             isLoading={false}
-          />
+          />)}
         </div>
       </div>
     </>

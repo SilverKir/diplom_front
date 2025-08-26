@@ -6,4 +6,18 @@
 }
 .table-wrap {
   width: 100%;
+  background-color: white;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.name-title {
+  font-size: 2em;
+}
+.table-wrap {
+  width: 100%;
+}
+
+tr:nth-child(even) {
+  background-color: rgb(223, 231, 231);
 }

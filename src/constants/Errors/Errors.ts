@@ -15,3 +15,4 @@ export const MIN_SYMBOLS_IN_PASSWORD =
   "Минимальное количество символов в пароле: ";
 export const NAME_REQUIRED = "Имя обязательно для заполнения";
 export const PHONE_NOT_VALID = "Номер телефона некорректен";
+export const DATA_NOT_CHANGED = "Данные не были изменены";
