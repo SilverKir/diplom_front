@@ -1,10 +1,10 @@
 import { useState, Dispatch, SetStateAction } from "react";
-import { InputField } from "../Custom/InputField";
-import { IHotel } from "../../interfaces";
-import * as yup from "yup";
-import { NAME_REQUIRED, DATA_NOT_CHANGED } from "../../constants";
-import { CustomButton } from "../Custom/CustomButton";
 import { useNavigate } from "react-router-dom";
+import * as yup from "yup";
+
+import { IHotel } from "../../interfaces";
+import { NAME_REQUIRED, DATA_NOT_CHANGED } from "../../constants";
+import { CustomButton, InputField } from "../../components";
 import classes from "./HotelForm.module.css";
 
 type HotelFormProps = {
@@ -61,10 +61,10 @@ export const HotelForm = (props: HotelFormProps) => {
   };
 
   const handleCancel = () => {
-    if (!isUpdate) {
-      navigate("/");
-    } else if (props.onCancel) {
+    if (props.onCancel) {
       props.onCancel();
+    } else {
+      navigate("/");
     }
   };
 
@@ -76,7 +76,7 @@ export const HotelForm = (props: HotelFormProps) => {
         onSubmit={isChecked ? handleSubmit : handleNullLogin}
         onReset={handleCancel}
       >
-        <h2>
+        <h2 className={classes["hotel-form-type"]}>
           {props.form.id
             ? "Редактирование гостиницы"
             : "Создать новую гостиницу"}

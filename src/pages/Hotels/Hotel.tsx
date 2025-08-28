@@ -12,7 +12,7 @@ type HotelProps = {
 
 export const Hotel = (props: HotelProps) => {
   const dispatch = useAppDispatch();
-  const { data, loading, error } = useAppSelector((state) => state.apiAction);
+  const { loading, error } = useAppSelector((state) => state.apiAction);
   const [form, setForm] = useState<IHotel>(
     props.hotel
       ? props.hotel

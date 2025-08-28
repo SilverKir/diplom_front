@@ -1,7 +1,10 @@
-export { LoginForm } from "./Login/LoginForm";
-export { RegisterForm } from "./Login/RegisterForm";
-export { FindHotelForm, RoomDescription, HotelListForm } from "./Hotel";
-export { Pagination } from "./Nav/Pagination";
-export { ClientReservationForm } from "./Reservation/ClientReservationForm";
-export * from "./Custom/Icons"
-export * from "./Hotel"
+export * from "./Login";
+export * from "./Nav";
+export * from "./Reservation";
+export * from "./Custom";
+export * from "./Hotel";
+export * from "./Header";
+export * from "./Layout";
+export * from "./LoginNav";
+export * from "./Logo";
+export * from "./Users";

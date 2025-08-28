@@ -4,17 +4,16 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import { AddUser, GetError } from "../../scripts";
 import { RegisterForm } from "../../components";
 import { GetDataFromApiThunk } from "../../redux";
-
-
+import { IRegisterData } from "../../interfaces";
 
 export const AddNewUser = () => {
   const { loading, error } = useAppSelector((state) => state.apiAction);
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<IRegisterData>({
     email: "",
     password: "",
     name: "",
     contactPhone: "",
-    role:"client",
+    role: "client",
   });
 
   const dispatch = useAppDispatch();
@@ -22,7 +21,7 @@ export const AddNewUser = () => {
 
   const HandleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-     await dispatch(GetDataFromApiThunk(AddUser(form)))
+    await dispatch(GetDataFromApiThunk(AddUser(form)))
       .unwrap()
       .then(() => {
         navigate(`/admin/users`);

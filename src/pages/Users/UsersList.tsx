@@ -24,10 +24,11 @@ export const UsersList = (props: { role: string }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [notFirstPage, setNotFirstPage] = useState(false);
   const [morePage, setMorePage] = useState(true);
+  const [updated, setUpdated] = useState(false);
 
   const handlePageChange = (newPage: number) => {
     setCurrentPage(newPage);
-    window.scrollTo(0, 80);
+    window.scrollTo(0, 180);
     setNotFirstPage(true);
   };
 
@@ -45,6 +46,7 @@ export const UsersList = (props: { role: string }) => {
         GetUsers({ ...form, offset: 0, limit: ROWS_PER_PAGE, role: role })
       )
     );
+    setUpdated(true);
     restartPagination();
   };
 
@@ -73,6 +75,7 @@ export const UsersList = (props: { role: string }) => {
       />
       <div>
         {!loading &&
+          updated &&
           data &&
           Object.prototype.toString.call(data) === "[object Array]" && (
             <>

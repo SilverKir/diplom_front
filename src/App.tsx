@@ -1,5 +1,4 @@
 import "./App.css";
-
 import {
   Route,
   createBrowserRouter,
@@ -8,10 +7,8 @@ import {
 } from "react-router-dom";
 import { useAppSelector } from "./hooks";
 import { Layout } from "./components/Layout";
-import { GetRoute } from "./scripts/Router/GetRoute";
-import { Login, Room } from "./pages";
-import { ClientReservationList } from "./pages/Reservation/ClientReservationList";
-
+import { GetRoute } from "./scripts";
+import { Login, Room, ClientReservationList } from "./pages";
 
 function App() {
   const { actions } = useAppSelector((state) => state.navActions);
@@ -28,7 +25,6 @@ function App() {
           path="/manager/reservations/:id"
           element={<ClientReservationList />}
         />
-       
       </Route>
     )
   );

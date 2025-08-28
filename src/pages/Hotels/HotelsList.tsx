@@ -1,29 +1,43 @@
 import { useEffect, useState } from "react";
 import { GetDataFromApiThunk } from "../../redux";
 import { GetAllHotels } from "../../scripts";
-import { editIcon, Pagination } from "../../components";
+import { CustomButton, editIcon, Pagination } from "../../components";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import classes from "./HotelList.module.css";
 import { ROWS_PER_PAGE } from "../../constants";
 import { IHotel } from "../../interfaces";
-
-import { Hotel } from "./Hotel";
+import { Hotel } from "../";
 
 export const HotelsList = () => {
   const [updated, setUpdated] = useState(false);
   const [table, setTable] = useState(true);
-  const [loaded, setLoaded] = useState(false);
   const dispatch = useAppDispatch();
-  const { data } = useAppSelector((state) => state.apiAction);
+  const { data, loading } = useAppSelector((state) => state.apiAction);
 
-  const [page, setPage] = useState(2);
-  const [notFirstPage, setNotFirstPage] = useState(false);
-  const [morePage, setMorePage] = useState(true);
-  const [hotel, setHotel] = useState<IHotel>({
+  const nullHotel = {
     id: "",
     title: "",
     description: "",
-  });
+  };
+  const [hotel, setHotel] = useState<IHotel>(nullHotel);
+
+  const [page, setPage] = useState(2);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [notFirstPage, setNotFirstPage] = useState(false);
+  const [morePage, setMorePage] = useState(true);
+
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+    window.scrollTo(0, 80);
+    setNotFirstPage(true);
+  };
+
+  const restartPagination = () => {
+    setPage(2);
+    setCurrentPage(0);
+    setNotFirstPage(false);
+    setMorePage(true);
+  };
 
   const handleHotel = (data: IHotel) => {
     setHotel(data);
@@ -40,7 +54,8 @@ export const HotelsList = () => {
       await dispatch(
         GetDataFromApiThunk(GetAllHotels({ offset: 0, limit: ROWS_PER_PAGE }))
       );
-      setLoaded(true);
+      setUpdated(true);
+      restartPagination();
     }
     fetchData();
   }, [updated]);
@@ -57,31 +72,25 @@ export const HotelsList = () => {
     handlePageChange(clickPage);
   };
 
-  const handlePageChange = (newPage: number) => {
-    window.scrollTo(0, 80);
-    setNotFirstPage(true);
-    if (data && Object.prototype.toString.call(data) === "[object Array]") {
-      if (data.length === 0) {
-        setPage(page - 1);
-      }
-      if (data.length === ROWS_PER_PAGE && morePage) {
-        if (newPage === page - 1) {
-          setPage(page + 1);
-        }
-      } else {
-        setMorePage(false);
-      }
-    }
-  };
-
   return (
     <>
-      {table && loaded && (
+      {table && updated && !loading && (
         <div className={classes["form-wrap"]}>
           <div>
             {data &&
               Object.prototype.toString.call(data) === "[object Array]" && (
                 <>
+                  <div className={classes["title-wrap"]}>
+                    <h2 className={classes["name-title"]}> Список гостиниц</h2>
+                    <CustomButton
+                      type="button"
+                      text="Создать гостиницу"
+                      onClick={() => {
+                        handleHotel(nullHotel);
+                      }}
+                    />
+                  </div>
+
                   <table className={classes["table-wrap"]}>
                     <thead>
                       <tr>
@@ -100,26 +109,30 @@ export const HotelsList = () => {
                           <td className={classes["table-cell"]}>
                             {item.description}
                           </td>
-                          <button
-                            className={classes["trash-button"]}
-                            onClick={() => {
-                              handleHotel(item);
-                            }}
-                          >
-                            <i>{editIcon}</i>
-                          </button>
+                          <td>
+                            <button
+                              className={classes["trash-button"]}
+                              onClick={() => {
+                                handleHotel(item);
+                              }}
+                            >
+                              <i>{editIcon}</i>
+                            </button>
+                          </td>
                         </tr>
                       ))}
                     </tbody>
                   </table>
                   {(notFirstPage || data.length === ROWS_PER_PAGE) && (
-                    <div className={classes["pagination"]}>
-                      <Pagination
-                        onClick={onPaginationClick}
-                        totalPages={page}
-                      />
-                      <div>{morePage && "..."}</div>
-                    </div>
+                    <Pagination
+                      onClick={onPaginationClick}
+                      totalPages={page}
+                      currentPage={currentPage}
+                      dataLength={data.length}
+                      setPage={setPage}
+                      morePage={data.length === ROWS_PER_PAGE && morePage}
+                      setMoreРage={setMorePage}
+                    />
                   )}
                 </>
               )}

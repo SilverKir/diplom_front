@@ -54,7 +54,7 @@ export const ClientReservationList = () => {
                     </thead>
                     <tbody>
                       {data.map((item: IClientReservation, index: number) => (
-                        <tr>
+                        <tr key={index}>
                           <td>{index + 1}</td>
                           {
                             <ClientReservationForm

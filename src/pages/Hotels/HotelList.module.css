@@ -10,7 +10,13 @@
   font-size: 2em;
 }
 .table-wrap {
+  margin-top: 10px;
   width: 100%;
+}
+.title-wrap {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 tr:nth-child(even) {

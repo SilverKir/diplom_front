@@ -1,3 +1,65 @@
+import classes from "./Icons.module.css";
+
 export const editIcon = (
-   <svg fill="none" height="20" viewBox="0 0 26 27" width="20"><path d="M20.5 10.9589V22.4112C20.5 23.905 19.3 25.1 17.8 25.1H4.2C2.7 25.1 1.5 23.905 1.5 22.4112V3.78878C1.5 2.295 2.7 1.09998 4.2 1.09998H17.8C19.3 1.09998 20.5 2.295 20.5 3.78878V4.98379V6.07923" stroke="#4F4F4F" stroke-miterlimit="10" stroke-width="2"/><path d="M4.7 8.07092H16.7" stroke="#4F4F4F" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M4.7 13.0502H13" stroke="#4F4F4F" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M4.7 18.129H8.5" stroke="#4F4F4F" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M21.7 4.58547L10.9 16.4361L10.1 19.7224L13.3 18.627L24.1 6.77634C24.5 6.27842 24.5 5.58132 24.1 5.18298L23.3 4.48588C22.9 4.08754 22.1 4.18713 21.7 4.58547Z" stroke="#4F4F4F" stroke-miterlimit="10" stroke-width="2"/><path d="M20.5 5.97968L22.9 8.17054" stroke="#4F4F4F" stroke-miterlimit="10" stroke-width="2"/><path d="M10.9 16.5356L13.3 18.6269" stroke="#4F4F4F" stroke-miterlimit="10" stroke-width="2"/></svg>
-  )
+  <svg fill="none" height="20" viewBox="0 0 26 27" width="20">
+    <path
+      d="M20.5 10.9589V22.4112C20.5 23.905 19.3 25.1 17.8 25.1H4.2C2.7 25.1 1.5 23.905 1.5 22.4112V3.78878C1.5 2.295 2.7 1.09998 4.2 1.09998H17.8C19.3 1.09998 20.5 2.295 20.5 3.78878V4.98379V6.07923"
+      stroke="#4F4F4F"
+      strokeMiterlimit="10"
+      strokeWidth="2"
+    />
+    <path
+      d="M4.7 8.07092H16.7"
+      stroke="#4F4F4F"
+      strokeLinecap="round"
+      strokeMiterlimit="10"
+      strokeWidth="2"
+    />
+    <path
+      d="M4.7 13.0502H13"
+      stroke="#4F4F4F"
+      strokeLinecap="round"
+      strokeMiterlimit="10"
+      strokeWidth="2"
+    />
+    <path
+      d="M4.7 18.129H8.5"
+      stroke="#4F4F4F"
+      strokeLinecap="round"
+      strokeMiterlimit="10"
+      strokeWidth="2"
+    />
+    <path
+      d="M21.7 4.58547L10.9 16.4361L10.1 19.7224L13.3 18.627L24.1 6.77634C24.5 6.27842 24.5 5.58132 24.1 5.18298L23.3 4.48588C22.9 4.08754 22.1 4.18713 21.7 4.58547Z"
+      stroke="#4F4F4F"
+      strokeMiterlimit="10"
+      strokeWidth="2"
+    />
+    <path
+      d="M20.5 5.97968L22.9 8.17054"
+      stroke="#4F4F4F"
+      strokeMiterlimit="10"
+      strokeWidth="2"
+    />
+    <path
+      d="M10.9 16.5356L13.3 18.6269"
+      stroke="#4F4F4F"
+      strokeMiterlimit="10"
+      strokeWidth="2"
+    />
+  </svg>
+);
+
+export const trashIcon = (
+  <svg className={classes["trash"]} viewBox="0 0 110.61 122.88">
+    <title>trash</title>
+    <path d="M39.27,58.64a4.74,4.74,0,1,1,9.47,0V93.72a4.74,4.74,0,1,1-9.47,0V58.64Zm63.6-19.86L98,103a22.29,22.29,0,0,1-6.33,14.1,19.41,19.41,0,0,1-13.88,5.78h-45a19.4,19.4,0,0,1-13.86-5.78l0,0A22.31,22.31,0,0,1,12.59,103L7.74,38.78H0V25c0-3.32,1.63-4.58,4.84-4.58H27.58V10.79A10.82,10.82,0,0,1,38.37,0H72.24A10.82,10.82,0,0,1,83,10.79v9.62h23.35a6.19,6.19,0,0,1,1,.06A3.86,3.86,0,0,1,110.59,24c0,.2,0,.38,0,.57V38.78Zm-9.5.17H17.24L22,102.3a12.82,12.82,0,0,0,3.57,8.1l0,0a10,10,0,0,0,7.19,3h45a10.06,10.06,0,0,0,7.19-3,12.8,12.8,0,0,0,3.59-8.1L93.37,39ZM71,20.41V12.05H39.64v8.36ZM61.87,58.64a4.74,4.74,0,1,1,9.47,0V93.72a4.74,4.74,0,1,1-9.47,0V58.64Z" />
+  </svg>
+);
+
+export const reservedIcon = (
+  <svg className={classes["reserved"]} viewBox="0 0 1920 1920">
+    <title>reserved</title>
+    <path d="M1411.824 0c31.17 0 56.47 25.3 56.47 56.471v56.47h169.412c93.403 0 169.412 76.01 169.412 169.412V1920H113V282.353c0-93.402 76.009-169.412 169.412-169.412h169.41v-56.47c0-31.172 25.3-56.47 56.472-56.47s56.47 25.298 56.47 56.47v56.47h790.589v-56.47c0-31.172 25.299-56.47 56.47-56.47Zm282.352 564.705H225.942v1242.353h1468.234V564.705Zm-322.277 242.428 79.849 79.851-604.687 604.687-378.692-378.805 79.85-79.85 298.842 298.842 524.838-524.725Zm-920.076-581.25H282.412c-31.06 0-56.47 25.298-56.47 56.47v169.412h1468.234V282.353c0-31.172-25.411-56.47-56.47-56.47h-169.412v56.47c0 31.172-25.3 56.471-56.47 56.471-31.172 0-56.471-25.299-56.471-56.47v-56.472H564.765v56.471c0 31.172-25.3 56.471-56.471 56.471-31.171 0-56.471-25.299-56.471-56.47v-56.472Z" />
+  </svg>
+);

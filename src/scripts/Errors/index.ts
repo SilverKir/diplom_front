@@ -1,0 +1,1 @@
+export { GetError } from "./GetError";

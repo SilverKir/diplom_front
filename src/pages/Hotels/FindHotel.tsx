@@ -11,32 +11,28 @@ export const FindHotel = () => {
   const dispatch = useAppDispatch();
   const { data, loading, error } = useAppSelector((state) => state.apiAction);
   const [form, setForm] = useState<IFindHotelData>({
-    hotelTitle: undefined,
-    dateStart: undefined,
-    dateEnd: undefined,
+    hotelTitle: "",
+    dateStart: new Date(),
+    dateEnd: new Date(),
   });
 
   const [page, setPage] = useState(2);
+  const [currentPage, setCurrentPage] = useState(0);
   const [notFirstPage, setNotFirstPage] = useState(false);
   const [morePage, setMorePage] = useState(true);
   const [updated, setUpdated] = useState(false);
 
-  
   const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
     window.scrollTo(0, 80);
     setNotFirstPage(true);
-    if (data && Object.prototype.toString.call(data) === "[object Array]") {
-      if (data.length === 0) {
-        setPage(page - 1);
-      }
-      if (data.length === ROWS_PER_PAGE && morePage) {
-        if (newPage === page - 1) {
-          setPage(page + 1);
-        }
-      } else {
-        setMorePage(false);
-      }
-    }
+  };
+
+  const restartPagination = () => {
+    setPage(2);
+    setCurrentPage(0);
+    setNotFirstPage(false);
+    setMorePage(true);
   };
 
   const HandleGetData = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -49,6 +45,7 @@ export const FindHotel = () => {
     setUpdated(true);
     dispatch(setStartDate(form.dateStart));
     dispatch(setEndDate(form.dateEnd));
+    restartPagination();
   };
 
   const onPaginationClick = async (clickPage: number) => {
@@ -75,6 +72,7 @@ export const FindHotel = () => {
       />
       <div>
         {updated &&
+          !loading &&
           data &&
           Object.prototype.toString.call(data) === "[object Array]" && (
             <>
@@ -85,10 +83,15 @@ export const FindHotel = () => {
               </ul>
 
               {(notFirstPage || data.length === ROWS_PER_PAGE) && (
-                <div className={classes["pagination"]}>
-                  <Pagination onClick={onPaginationClick} totalPages={page} />
-                  <div>{morePage && "..."}</div>
-                </div>
+                <Pagination
+                  onClick={onPaginationClick}
+                  totalPages={page}
+                  currentPage={currentPage}
+                  dataLength={data.length}
+                  setPage={setPage}
+                  morePage={data.length === ROWS_PER_PAGE && morePage}
+                  setMoreРage={setMorePage}
+                />
               )}
             </>
           )}

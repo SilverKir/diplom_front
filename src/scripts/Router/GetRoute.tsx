@@ -1,5 +1,13 @@
-import { Login, Register, FindHotel, UsersList, AddNewUser, HotelsList, Hotel } from "../../pages";
-import { ClientReservationList } from "../../pages/Reservation/ClientReservationList";
+import {
+  Login,
+  Register,
+  FindHotel,
+  UsersList,
+  AddNewUser,
+  HotelsList,
+  Hotel,
+  ClientReservationList,
+} from "../../pages";
 
 export const GetRoute = (link: string | undefined): JSX.Element | undefined => {
   switch (link) {
@@ -16,11 +24,11 @@ export const GetRoute = (link: string | undefined): JSX.Element | undefined => {
     case "/manager/users":
       return <UsersList role="manager" />;
     case "/admin/new_user":
-      return <AddNewUser/>;
+      return <AddNewUser />;
     case "/admin/hotels":
-     return <HotelsList/>;
-      case "/admin/hotel":
-     return <Hotel/>;
+      return <HotelsList />;
+    case "/admin/hotel":
+      return <Hotel />;
 
     default:
       return <Login />;
