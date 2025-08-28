@@ -30,17 +30,17 @@ export const apiSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(GetDataFromApiThunk.pending, (state) => {
-        state.loading = true;
         state.error = null;
+        state.loading = true;
       })
       .addCase(GetDataFromApiThunk.fulfilled, (state, action) => {
-        state.loading = false;
-        state.error = null;
         state.data = action.payload ? action.payload : null;
+        state.error = null;
+        state.loading = false;
       })
       .addCase(GetDataFromApiThunk.rejected, (state, action) => {
-        state.loading = false;
         state.error = action.error.message;
+        state.loading = false;
       });
   },
 });
