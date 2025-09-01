@@ -8,16 +8,16 @@ export const Nav = (props: { actions: ILoginAction[] }) => {
     <>
       <div className={classes["nav-wrap"]}>
         {props.actions.map((action) => {
-             return (
-            <NavLink
-              className={classes["nav-link"]}
-              key={action?.id}
-              to={action?.link ? action?.link : "#"}
-            >
-              &gt; {action?.name}
-            </NavLink>
-          );
-        
+          if (action.action)
+            return (
+              <NavLink
+                className={classes["nav-link"]}
+                key={action?.id}
+                to={action?.link ? action?.link : "#"}
+              >
+                &gt; {action?.name}
+              </NavLink>
+            );
         })}
       </div>
     </>

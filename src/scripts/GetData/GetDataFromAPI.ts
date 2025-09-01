@@ -1,4 +1,4 @@
-import { IRequestData } from "../interfaces";
+import { IRequestData } from "../../interfaces";
 
 const URL = import.meta.env.VITE_APP_NAMES_URL;
 

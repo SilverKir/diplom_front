@@ -1,4 +1,4 @@
-export { GetDataFromAPI } from "./GetDataFromAPI";
+export * from "./GetData/";
 export * from "./Errors";
 export * from "./Nav";
 export * from "./Auth";

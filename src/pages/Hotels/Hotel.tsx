@@ -1,9 +1,16 @@
-import { useState } from "react";
-import { HotelForm } from "../../components/Hotel/HotelForm";
+import { useEffect, useState } from "react";
+import { HotelForm, Pagination, RoomDescription } from "../../components";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { IHotel } from "../../interfaces";
-import { CreateHotel, GetError, UpdateHotel } from "../../scripts";
+import { IHotel, IHotelRoomProps } from "../../interfaces";
+import {
+  CreateHotel,
+  GetError,
+  GetRoomsByHotelId,
+  UpdateHotel,
+} from "../../scripts";
 import { GetDataFromApiThunk } from "../../redux";
+import { ROWS_PER_PAGE } from "../../constants";
+import classes from "./Hotel.module.css";
 
 type HotelProps = {
   hotel?: IHotel;
@@ -12,7 +19,27 @@ type HotelProps = {
 
 export const Hotel = (props: HotelProps) => {
   const dispatch = useAppDispatch();
-  const { loading, error } = useAppSelector((state) => state.apiAction);
+  const { data, loading, error } = useAppSelector((state) => state.apiAction);
+  const [updated, setUpdated] = useState(false);
+
+  const [page, setPage] = useState(2);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [notFirstPage, setNotFirstPage] = useState(false);
+  const [morePage, setMorePage] = useState(true);
+
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+    window.scrollTo(0, 80);
+    setNotFirstPage(true);
+  };
+
+  const restartPagination = () => {
+    setPage(2);
+    setCurrentPage(0);
+    setNotFirstPage(false);
+    setMorePage(true);
+  };
+
   const [form, setForm] = useState<IHotel>(
     props.hotel
       ? props.hotel
@@ -22,6 +49,43 @@ export const Hotel = (props: HotelProps) => {
           description: "",
         }
   );
+
+  useEffect(() => {
+    async function fetchData() {
+      if (props.hotel && props.hotel.id) {
+        await dispatch(
+          GetDataFromApiThunk(
+            GetRoomsByHotelId({
+              id: props.hotel.id,
+              offset: 0,
+              limit: ROWS_PER_PAGE,
+            })
+          )
+        );
+        setUpdated(true);
+        restartPagination();
+      }
+    }
+
+    fetchData();
+  }, []);
+
+  const onPaginationClick = async (clickPage: number) => {
+    await dispatch(
+      GetDataFromApiThunk(
+        GetRoomsByHotelId({
+          id: props.hotel?.id ? props.hotel?.id : "",
+          offset: clickPage * ROWS_PER_PAGE,
+          limit: ROWS_PER_PAGE,
+        })
+      )
+    );
+    handlePageChange(clickPage);
+  };
+
+  const UpdateRoom = () => {
+    console.log("Update");
+  };
 
   const HandleUpdateHotel = async () => {
     if (form.id) {
@@ -54,6 +118,34 @@ export const Hotel = (props: HotelProps) => {
         isLoading={loading}
         onCancel={props.onUpdate}
       />
+      {updated && data && (data as object[]).length > 0 && (
+        <>
+          <h2 className={classes["rooms-header"]}>Комнаты</h2>
+          {(data as IHotelRoomProps[]).map(
+            (room: IHotelRoomProps, index: number) => (
+              <div key={index}>
+                <RoomDescription
+                  room={room}
+                  buttonVisible={true}
+                  buttonName="Редактировать"
+                  onClick={UpdateRoom}
+                />
+              </div>
+            )
+          )}
+          {(notFirstPage || (data as object[]).length === ROWS_PER_PAGE) && (
+            <Pagination
+              onClick={onPaginationClick}
+              totalPages={page}
+              currentPage={currentPage}
+              dataLength={(data as object[]).length}
+              setPage={setPage}
+              morePage={(data as object[]).length === ROWS_PER_PAGE && morePage}
+              setMoreРage={setMorePage}
+            />
+          )}
+        </>
+      )}
     </>
   );
 };

@@ -37,7 +37,7 @@ export const HotelForm = (props: HotelFormProps) => {
         setError("");
         setChecked(true);
       } catch (err) {
-        setError(err.errors);
+        setError(err.error);
         setChecked(false);
       }
     } else if (isUpdate && name === "description") {
@@ -66,6 +66,10 @@ export const HotelForm = (props: HotelFormProps) => {
     } else {
       navigate("/");
     }
+  };
+
+  const handleInsertRoom = () => {
+    console.log("InsertRoom");
   };
 
   return (
@@ -115,6 +119,15 @@ export const HotelForm = (props: HotelFormProps) => {
             type="reset"
             text="Отмена"
           />
+
+          {props.form.id && (
+            <CustomButton
+              className={classes["insert-button"]}
+              type="button"
+              text="Добавить комнату"
+              onClick={handleInsertRoom}
+            />
+          )}
         </div>
         <div className={classes["error-message"]}>
           {props.isError ? props.isError : ""}

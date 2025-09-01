@@ -5,7 +5,6 @@ import { GetError, GetHotels } from "../../scripts";
 import { IFindHotelData, IHotelRoomProps } from "../../interfaces";
 import { GetDataFromApiThunk, setStartDate, setEndDate } from "../../redux";
 import { ROWS_PER_PAGE } from "../../constants";
-import classes from "./findHotel.module.css";
 
 export const FindHotel = () => {
   const dispatch = useAppDispatch();
@@ -77,19 +76,21 @@ export const FindHotel = () => {
           Object.prototype.toString.call(data) === "[object Array]" && (
             <>
               <ul>
-                {data.map((item: IHotelRoomProps) => (
+                {(data as IHotelRoomProps[]).map((item: IHotelRoomProps) => (
                   <li key={item.id}>{<HotelListForm {...item} />}</li>
                 ))}
               </ul>
 
-              {(notFirstPage || data.length === ROWS_PER_PAGE) && (
+              {(notFirstPage || length === ROWS_PER_PAGE) && (
                 <Pagination
                   onClick={onPaginationClick}
                   totalPages={page}
                   currentPage={currentPage}
-                  dataLength={data.length}
+                  dataLength={(data as object[]).length}
                   setPage={setPage}
-                  morePage={data.length === ROWS_PER_PAGE && morePage}
+                  morePage={
+                    (data as object[]).length === ROWS_PER_PAGE && morePage
+                  }
                   setMoreРage={setMorePage}
                 />
               )}

@@ -6,9 +6,9 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import { useAppSelector } from "./hooks";
-import { Layout } from "./components/Layout";
+import { Layout } from "./components";
 import { GetRoute } from "./scripts";
-import { Login, Room, ClientReservationList } from "./pages";
+import { Login } from "./pages";
 
 function App() {
   const { actions } = useAppSelector((state) => state.navActions);
@@ -20,11 +20,6 @@ function App() {
           <Route path={elem.link} element={GetRoute(elem.link)} key={index} />
         ))}
         <Route path="*" element={<Login />} />
-        <Route path="/hotel-room/:id" element={<Room />} />
-        <Route
-          path="/manager/reservations/:id"
-          element={<ClientReservationList />}
-        />
       </Route>
     )
   );

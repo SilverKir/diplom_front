@@ -1,0 +1,12 @@
+.hotel-room-wrap {
+  margin-top: 20px;
+  background-color: white;
+  border-radius: 16px;
+}
+.hotel-wrap {
+  padding: 10px;
+}
+.hotel-name {
+  font-size: 1.5em;
+  font-weight: bold;
+}

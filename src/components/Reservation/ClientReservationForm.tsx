@@ -32,10 +32,10 @@ export const ClientReservationForm = (props: IClientReservationProps) => {
       );
       UpdateList();
     } catch (e) {
-      if (e.message === 400) {
+      if ((e as Error).message === "400") {
         dispatch(SetError(4006));
       } else {
-        dispatch(SetError(e.message));
+        dispatch(SetError((e as Error).message));
       }
     } finally {
       dispatch(SetLoading(false));

@@ -53,18 +53,20 @@ export const ClientReservationList = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {data.map((item: IClientReservation, index: number) => (
-                        <tr key={index}>
-                          <td>{index + 1}</td>
-                          {
-                            <ClientReservationForm
-                              reservationData={item}
-                              UpdateList={UpdatePage}
-                              key={item.id}
-                            />
-                          }
-                        </tr>
-                      ))}
+                      {(data as IClientReservation[]).map(
+                        (item: IClientReservation, index: number) => (
+                          <tr key={index}>
+                            <td>{index + 1}</td>
+                            {
+                              <ClientReservationForm
+                                reservationData={item}
+                                UpdateList={UpdatePage}
+                                key={item.id}
+                              />
+                            }
+                          </tr>
+                        )
+                      )}
                     </tbody>
                   </table>
                 </>

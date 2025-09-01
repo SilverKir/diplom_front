@@ -100,7 +100,7 @@ export const HotelsList = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {data.map((item: IHotel, index: number) => (
+                      {(data as IHotel[]).map((item: IHotel, index: number) => (
                         <tr key={item.id}>
                           <td>{index + 1}</td>
                           <td className={classes["table-cell"]}>
@@ -123,14 +123,17 @@ export const HotelsList = () => {
                       ))}
                     </tbody>
                   </table>
-                  {(notFirstPage || data.length === ROWS_PER_PAGE) && (
+                  {(notFirstPage ||
+                    (data as object[]).length === ROWS_PER_PAGE) && (
                     <Pagination
                       onClick={onPaginationClick}
                       totalPages={page}
                       currentPage={currentPage}
-                      dataLength={data.length}
+                      dataLength={(data as object[]).length}
                       setPage={setPage}
-                      morePage={data.length === ROWS_PER_PAGE && morePage}
+                      morePage={
+                        (data as object[]).length === ROWS_PER_PAGE && morePage
+                      }
                       setMoreРage={setMorePage}
                     />
                   )}
