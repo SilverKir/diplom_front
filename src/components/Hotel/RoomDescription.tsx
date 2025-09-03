@@ -7,7 +7,7 @@ const URL = import.meta.env.VITE_APP_NAMES_URL;
 
 type RoomDescriptionProps = {
   room: IHotelRoomProps;
-  onClick: () => void;
+  onClick: (room?: IHotelRoomProps, hotelId?: string) => void;
   buttonVisible: boolean;
   buttonName: string;
 };
@@ -39,7 +39,7 @@ export const RoomDescription = (props: RoomDescriptionProps) => {
             type="button"
             text={props.buttonName}
             onClick={() => {
-              props.onClick();
+              props.onClick(props.room);
             }}
             isLoading={false}
           />

@@ -2,7 +2,7 @@ import { useState, Dispatch, SetStateAction } from "react";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 
-import { IHotel } from "../../interfaces";
+import { IHotel, IHotelRoomProps } from "../../interfaces";
 import { NAME_REQUIRED, DATA_NOT_CHANGED } from "../../constants";
 import { CustomButton, InputField } from "../../components";
 import classes from "./HotelForm.module.css";
@@ -15,6 +15,7 @@ type HotelFormProps = {
   setForm: Dispatch<SetStateAction<IHotel>>;
   isLoading?: boolean;
   onCancel?: () => void;
+  onCreateRoom?: (room?: IHotelRoomProps, hotelId?: string) => void;
 };
 
 export const HotelForm = (props: HotelFormProps) => {
@@ -57,10 +58,11 @@ export const HotelForm = (props: HotelFormProps) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     props.onSubmit(e);
-    handleCancel();
+    handleCancel(e);
   };
 
-  const handleCancel = () => {
+  const handleCancel = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (props.onCancel) {
       props.onCancel();
     } else {
@@ -69,7 +71,9 @@ export const HotelForm = (props: HotelFormProps) => {
   };
 
   const handleInsertRoom = () => {
-    console.log("InsertRoom");
+    if (props.onCreateRoom) {
+      if (props.form.id) props.onCreateRoom(undefined, props.form.id);
+    }
   };
 
   return (

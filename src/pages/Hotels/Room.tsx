@@ -10,11 +10,11 @@ import classes from "./Room.module.css";
 export const Room = () => {
   const { id } = useParams();
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { data, loading } = useAppSelector((state) => state.apiAction);
   const [updated, setUpdated] = useState(false);
   const { actions } = useAppSelector((state) => state.navActions);
   const { startDate, endDate } = useAppSelector((state) => state.dateAction);
-  const navigate = useNavigate();
 
   const canReserv = !actions.isAuth || actions.role === "client";
 

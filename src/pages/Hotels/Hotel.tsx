@@ -11,6 +11,7 @@ import {
 import { GetDataFromApiThunk } from "../../redux";
 import { ROWS_PER_PAGE } from "../../constants";
 import classes from "./Hotel.module.css";
+import { RoomEdit } from "..";
 
 type HotelProps = {
   hotel?: IHotel;
@@ -26,6 +27,9 @@ export const Hotel = (props: HotelProps) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [notFirstPage, setNotFirstPage] = useState(false);
   const [morePage, setMorePage] = useState(true);
+  const [editRoom, setEditRoom] = useState(false);
+  const [room, setRoomId] = useState<IHotelRoomProps | undefined>(undefined);
+  const [hotelId, setHotelId] = useState<string | undefined>(undefined);
 
   const handlePageChange = (newPage: number) => {
     setCurrentPage(newPage);
@@ -83,8 +87,10 @@ export const Hotel = (props: HotelProps) => {
     handlePageChange(clickPage);
   };
 
-  const UpdateRoom = () => {
-    console.log("Update");
+  const UpdateRoom = (room?: IHotelRoomProps, hotelId?: string) => {
+    setRoomId(room);
+    setHotelId(hotelId);
+    setEditRoom(true);
   };
 
   const HandleUpdateHotel = async () => {
@@ -108,7 +114,7 @@ export const Hotel = (props: HotelProps) => {
     }
   };
 
-  return (
+  return !editRoom ? (
     <>
       <HotelForm
         form={form}
@@ -117,6 +123,7 @@ export const Hotel = (props: HotelProps) => {
         isError={error ? GetError(error) : undefined}
         isLoading={loading}
         onCancel={props.onUpdate}
+        onCreateRoom={UpdateRoom}
       />
       {updated && data && (data as object[]).length > 0 && (
         <>
@@ -147,5 +154,7 @@ export const Hotel = (props: HotelProps) => {
         </>
       )}
     </>
+  ) : (
+    <RoomEdit room={room} hotelId={hotelId} />
   );
 };
