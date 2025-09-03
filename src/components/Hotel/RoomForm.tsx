@@ -1,10 +1,12 @@
 import { ChangeEvent, useEffect, useRef, useState } from "react";
+import Modal from "react-modal";
 import classes from "./RoomForm.module.css";
 import {
   MAX_FILE_SIZE,
   MAX_ROOM_PHOTO,
   VALID_IMAGE_TYPES,
 } from "../../constants";
+import { closeIcon } from "../Custom";
 
 type InitialDnDStateType = {
   draggedFrom: number | null;
@@ -26,6 +28,18 @@ export const RoomForm = () => {
   const [dragAndDrop, setDragAndDrop] = useState(initialDnDState);
   const [updated, setUpdated] = useState(false);
   const uploadRef = useRef<HTMLInputElement>(null);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState("");
+
+  const openModal = (imageUrl: string) => {
+    setSelectedImage(imageUrl);
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+    setSelectedImage("");
+  };
 
   const onDragStart = (event: React.DragEvent<HTMLLIElement>) => {
     const initialPosition = Number(event.currentTarget.dataset.position);
@@ -111,6 +125,11 @@ export const RoomForm = () => {
     }
   };
 
+  const deleteImage = (deletedIndex: number) => {
+    const newList = fileData.filter((item, index) => index !== deletedIndex);
+    setFileData(newList);
+  };
+
   const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     event.stopPropagation();
@@ -157,15 +176,36 @@ export const RoomForm = () => {
                 onDrop={onDrop}
                 onDragLeave={onDragLeave}
               >
+                <button
+                  onClick={() => deleteImage(index)}
+                  className={classes["close-button"]}
+                >
+                  {closeIcon}
+                </button>
                 <img
-                  alt="Preview"
+                  alt={"Room image " + { index }}
                   src={file}
                   className={classes["room-image"]}
-                ></img>
+                  onClick={() => openModal(file)}
+                />
               </li>
             );
           })}
         </ul>
+        <Modal
+          isOpen={modalIsOpen}
+          onRequestClose={closeModal}
+          contentLabel="Просмотр изображения"
+        >
+          <div className={classes["modal-wrap"]}>
+            <button onClick={closeModal} className={classes["modal-button"]}>
+              {closeIcon}
+            </button>
+            {selectedImage && (
+              <img src={selectedImage} alt="Увеличенное изображение" />
+            )}
+          </div>
+        </Modal>
       </section>
     </>
   );

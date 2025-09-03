@@ -23,6 +23,7 @@
   padding: 5px;
   border-radius: 8px;
   width: 150px;
+  position: relative;
 }
 
 .room-image {
@@ -38,4 +39,21 @@
 }
 .input-field {
   display: none;
+}
+.modal-button {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
+.close-icon {
+  width: 30px;
+  height: 30px;
+}
+.close-button {
+  position: absolute;
+  right: 5px;
+  width: 20px;
+  height: 20px;
 }
