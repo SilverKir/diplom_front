@@ -81,7 +81,8 @@ export const FindHotel = () => {
                 ))}
               </ul>
 
-              {(notFirstPage || length === ROWS_PER_PAGE) && (
+              {(notFirstPage ||
+                (data as IHotelRoomProps[]).length === ROWS_PER_PAGE) && (
                 <Pagination
                   onClick={onPaginationClick}
                   totalPages={page}

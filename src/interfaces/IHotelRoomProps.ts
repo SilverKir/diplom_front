@@ -1,7 +1,8 @@
 export interface IHotelRoomProps {
   id: string;
   description: string;
-  images: (string | null)[];
+  images: string[];
+  isEnabled?: boolean;
   hotel: {
     id: string;
     title: string;

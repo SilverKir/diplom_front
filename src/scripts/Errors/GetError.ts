@@ -10,6 +10,9 @@ import {
 
 export const GetError = (err: string | number): string => {
   const error = Number(err);
+  if (Number.isNaN(error)) {
+    return err.toString();
+  }
   switch (error) {
     case 400:
       return ERROR_400;

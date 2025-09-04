@@ -155,6 +155,6 @@ export const Hotel = (props: HotelProps) => {
       )}
     </>
   ) : (
-    <RoomEdit room={room} hotelId={hotelId} />
+    <RoomEdit room={room} hotelId={hotelId} setRoom={setEditRoom} />
   );
 };
