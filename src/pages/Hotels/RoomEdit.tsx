@@ -1,18 +1,23 @@
 import { Dispatch, SetStateAction } from "react";
 import { RoomForm } from "../../components";
-import { IHotelRoomProps } from "../../interfaces";
+import { IHotelRoomProps, IRoom, IUpdateRoomProps } from "../../interfaces";
 import classes from "./RoomEdit.module.css";
+import { useAppDispatch } from "../../hooks";
+import { GetDataFromApiThunk } from "../../redux";
+import { CreateRoom, SendFormDataToAPI } from "../../scripts";
 
 const URL = import.meta.env.VITE_APP_NAMES_URL;
 
 type RoomEditProps = {
   room?: IHotelRoomProps;
-  hotelId?: string;
+  hotelId: string;
   onUpdate?: () => void;
   setRoom: Dispatch<SetStateAction<boolean>>;
 };
 
 export const RoomEdit = (props: RoomEditProps) => {
+  const dispatch = useAppDispatch();
+
   const roomImages: string[] = [];
   if (props.room && props.room.images) {
     props.room.images.map((image) => {
@@ -26,6 +31,16 @@ export const RoomEdit = (props: RoomEditProps) => {
     props.setRoom(false);
   };
 
+  const updateRoom = async (roomData: IUpdateRoomProps) => {
+    let newRoom: IRoom = { hotelId: props.hotelId, ...roomData };
+    if (props.room?.id) {
+      newRoom = { ...newRoom, id: props.room.id };
+      await SendFormDataToAPI(CreateRoom(newRoom));
+    } else {
+      await SendFormDataToAPI(CreateRoom(newRoom));
+    }
+  };
+
   return (
     <>
       <div className={classes["form-wrap"]}>
@@ -35,6 +50,7 @@ export const RoomEdit = (props: RoomEditProps) => {
           description={props.room?.description}
           isEnabled={props.room?.isEnabled}
           onCancel={onCancel}
+          onSubmit={updateRoom}
         />
       </div>
     </>

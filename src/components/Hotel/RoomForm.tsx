@@ -14,6 +14,7 @@ import {
 import { closeIcon, CustomButton, InputField } from "../Custom";
 import { useAppDispatch } from "../../hooks";
 import { SetError } from "../../redux";
+import { IUpdateRoomProps } from "../../interfaces";
 
 type InitialDnDStateType = {
   draggedFrom: number | null;
@@ -28,7 +29,7 @@ type RoomFormProps = {
   description?: string;
   isEnabled?: boolean;
   onCancel: () => void;
-  onSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
+  onSubmit: (newRoom: IUpdateRoomProps) => Promise<void>;
 };
 
 export const RoomForm = (props: RoomFormProps) => {
@@ -208,6 +209,11 @@ export const RoomForm = (props: RoomFormProps) => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    props.onSubmit({
+      images: fileData,
+      description: description,
+      isEnabled: enabled,
+    });
   };
 
   return (

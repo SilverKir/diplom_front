@@ -8,3 +8,5 @@ export type { IClientReservation } from "./IClientReservation";
 export type { IFindUser } from "./IFindUser";
 export type { IUser } from "./IUser";
 export type { IHotel } from "./IHotel";
+export type { IRoom } from "./IRoom";
+export type { IUpdateRoomProps } from "./IUpdateRoomProps";
