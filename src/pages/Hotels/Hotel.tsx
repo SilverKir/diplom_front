@@ -22,7 +22,6 @@ export const Hotel = (props: HotelProps) => {
   const dispatch = useAppDispatch();
   const { data, loading, error } = useAppSelector((state) => state.apiAction);
   const [updated, setUpdated] = useState(false);
-
   const [page, setPage] = useState(2);
   const [currentPage, setCurrentPage] = useState(0);
   const [notFirstPage, setNotFirstPage] = useState(false);
@@ -30,6 +29,11 @@ export const Hotel = (props: HotelProps) => {
   const [editRoom, setEditRoom] = useState(false);
   const [room, setRoomId] = useState<IHotelRoomProps | undefined>(undefined);
   const [hotelId, setHotelId] = useState<string | undefined>(undefined);
+  const [updateRooms, setUpdateRooms] = useState(false);
+
+  const updatePage = () => {
+    setUpdateRooms(!updateRooms);
+  };
 
   const handlePageChange = (newPage: number) => {
     setCurrentPage(newPage);
@@ -72,7 +76,7 @@ export const Hotel = (props: HotelProps) => {
     }
 
     fetchData();
-  }, []);
+  }, [updateRooms]);
 
   const onPaginationClick = async (clickPage: number) => {
     await dispatch(
@@ -155,6 +159,11 @@ export const Hotel = (props: HotelProps) => {
       )}
     </>
   ) : (
-    <RoomEdit room={room} hotelId={hotelId} setRoom={setEditRoom} />
+    <RoomEdit
+      room={room}
+      hotelId={hotelId ? hotelId : ""}
+      setRoom={setEditRoom}
+      onUpdate={updatePage}
+    />
   );
 };

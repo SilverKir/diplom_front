@@ -1,8 +1,8 @@
-import { IRequestData } from "../../interfaces";
+import { IRequestDataWithImages } from "../../interfaces";
 
 const URL = import.meta.env.VITE_APP_NAMES_URL;
 
-export const SendFormDataToAPI = async (fetchParam: IRequestData) => {
+export const SendFormDataToAPI = async (fetchParam: IRequestDataWithImages) => {
   const response = await fetch(
     URL +
       fetchParam.url +
@@ -14,13 +14,13 @@ export const SendFormDataToAPI = async (fetchParam: IRequestData) => {
       credentials: "include",
       method: fetchParam.method,
       headers: {
-       
         Cookie: document.cookie,
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
-      body: fetchParam.arg
+      body: fetchParam.arg,
     }
   );
+
   if (!response.ok) {
     throw new Error(String(response.status));
   }

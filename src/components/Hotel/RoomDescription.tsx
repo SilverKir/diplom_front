@@ -39,7 +39,7 @@ export const RoomDescription = (props: RoomDescriptionProps) => {
             type="button"
             text={props.buttonName}
             onClick={() => {
-              props.onClick(props.room);
+              props.onClick(props.room, props.room.hotel.id);
             }}
             isLoading={false}
           />

@@ -3,7 +3,7 @@ import { RoomForm } from "../../components";
 import { IHotelRoomProps, IRoom, IUpdateRoomProps } from "../../interfaces";
 import classes from "./RoomEdit.module.css";
 import { useAppDispatch } from "../../hooks";
-import { GetDataFromApiThunk } from "../../redux";
+import { SetError } from "../../redux";
 import { CreateRoom, SendFormDataToAPI } from "../../scripts";
 
 const URL = import.meta.env.VITE_APP_NAMES_URL;
@@ -17,7 +17,6 @@ type RoomEditProps = {
 
 export const RoomEdit = (props: RoomEditProps) => {
   const dispatch = useAppDispatch();
-
   const roomImages: string[] = [];
   if (props.room && props.room.images) {
     props.room.images.map((image) => {
@@ -34,10 +33,19 @@ export const RoomEdit = (props: RoomEditProps) => {
   const updateRoom = async (roomData: IUpdateRoomProps) => {
     let newRoom: IRoom = { hotelId: props.hotelId, ...roomData };
     if (props.room?.id) {
-      newRoom = { ...newRoom, id: props.room.id };
-      await SendFormDataToAPI(CreateRoom(newRoom));
+      newRoom = { hotelId: props.hotelId, id: props.room.id, ...roomData };
+      const arg = CreateRoom(newRoom);
+      console.log("arg done");
+      await SendFormDataToAPI(arg);
     } else {
-      await SendFormDataToAPI(CreateRoom(newRoom));
+      const arg = CreateRoom(newRoom);
+      try {
+        await SendFormDataToAPI(arg);
+        props.setRoom(false);
+        if (props.onUpdate) props.onUpdate();
+      } catch (e) {
+        dispatch(SetError(e));
+      }
     }
   };
 

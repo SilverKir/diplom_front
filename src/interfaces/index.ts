@@ -10,3 +10,4 @@ export type { IUser } from "./IUser";
 export type { IHotel } from "./IHotel";
 export type { IRoom } from "./IRoom";
 export type { IUpdateRoomProps } from "./IUpdateRoomProps";
+export type { IRequestDataWithImages } from "./IRequestDataWithImages";
