@@ -2,6 +2,7 @@ import { ChangeEvent, useEffect, useRef, useState } from "react";
 import Modal from "react-modal";
 import classes from "./RoomForm.module.css";
 import {
+  DATA_NOT_CHANGED,
   DATA_REQUIRED,
   IMAGE_REQUIRED,
   MAX_FILE_SIZE,
@@ -194,7 +195,7 @@ export const RoomForm = (props: RoomFormProps) => {
     }
   };
 
-  const handleNullLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleNullLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (description) {
       setChecked(true);
@@ -209,11 +210,19 @@ export const RoomForm = (props: RoomFormProps) => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    props.onSubmit({
-      images: fileData,
-      description: description,
-      isEnabled: enabled,
-    });
+    if (
+      JSON.stringify(fileData) === JSON.stringify(props.images) &&
+      description === props.description &&
+      enabled === props.isEnabled
+    ) {
+      dispatch(SetError(DATA_NOT_CHANGED));
+    } else {
+      await props.onSubmit({
+        images: fileData,
+        description: description,
+        isEnabled: enabled,
+      });
+    }
   };
 
   return (
@@ -221,7 +230,10 @@ export const RoomForm = (props: RoomFormProps) => {
       <form
         className={classes["room-form"]}
         autoComplete="on"
-        onSubmit={isChecked ? handleSubmit : handleNullLogin}
+        onFocus={handleNullLogin}
+        onSubmit={(e) => {
+          if (isChecked) handleSubmit(e);
+        }}
         onReset={() => {
           props.onCancel();
         }}
