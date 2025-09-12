@@ -8,6 +8,7 @@ import {
   Hotel,
   ClientReservationList,
   Room,
+  SupportRequests,
 } from "../../pages";
 
 export const GetRoute = (link: string | undefined): JSX.Element | undefined => {
@@ -34,6 +35,9 @@ export const GetRoute = (link: string | undefined): JSX.Element | undefined => {
       return <Room />;
     case "/manager/reservations/:id":
       return <ClientReservationList />;
+    case "/client/support-requests":
+      return;
+      <SupportRequests />;
 
     default:
       return <Login />;

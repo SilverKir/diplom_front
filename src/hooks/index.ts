@@ -5,5 +5,6 @@ import type { RootState, AppDispatch } from "../redux/store";
 export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
-export {useGetData} from "./useGetData"
-export {useAuth} from "./useAuth"
+export { useGetData } from "./useGetData";
+export { useAuth } from "./useAuth";
+export { useChat } from "./useChat";
