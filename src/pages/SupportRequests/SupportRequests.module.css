@@ -1,0 +1,11 @@
+.form-wrap {
+  margin-top: 20px;
+  width: 100%;
+  background-color: white;
+  border-radius: 8px;
+  padding: 10px;
+}
+.active-checkbox {
+  display: flex;
+  gap: 15px;
+}

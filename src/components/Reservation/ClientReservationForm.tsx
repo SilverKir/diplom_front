@@ -1,5 +1,5 @@
 import { IClientReservation } from "../../interfaces";
-import { DeleteReservationById, GetDataFromAPI } from "../../scripts";
+import { ConvertDate, DeleteReservationById, GetDataFromAPI } from "../../scripts";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { SetError, SetLoading } from "../../redux";
 import classes from "./ClientReservationForm.module.css";
@@ -14,15 +14,6 @@ export const ClientReservationForm = (props: IClientReservationProps) => {
   const { reservationData, UpdateList } = props;
   const dispatch = useAppDispatch();
   const { actions } = useAppSelector((state) => state.navActions);
-
-  const ConvertDate = (date: string): string => {
-    const result = new Date(date);
-    return result.toLocaleDateString("ru-RU", {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-    });
-  };
 
   const DeleteReserve = async () => {
     dispatch(SetLoading(true));

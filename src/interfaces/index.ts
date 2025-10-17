@@ -11,3 +11,6 @@ export type { IHotel } from "./IHotel";
 export type { IRoom } from "./IRoom";
 export type { IUpdateRoomProps } from "./IUpdateRoomProps";
 export type { IRequestDataWithImages } from "./IRequestDataWithImages";
+export type { IGetSupportRequests } from "./IGetSupportRequests";
+export type { ISupportRequest } from "./ISupportRequest";
+export type { IChatMessage } from "./IChatMessage";

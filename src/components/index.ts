@@ -8,3 +8,4 @@ export * from "./Layout";
 export * from "./LoginNav";
 export * from "./Logo";
 export * from "./Users";
+export * from "./SupportRequest";

@@ -9,6 +9,7 @@ import {
   ClientReservationList,
   Room,
   SupportRequests,
+  Chat,
 } from "../../pages";
 
 export const GetRoute = (link: string | undefined): JSX.Element | undefined => {
@@ -36,9 +37,11 @@ export const GetRoute = (link: string | undefined): JSX.Element | undefined => {
     case "/manager/reservations/:id":
       return <ClientReservationList />;
     case "/client/support-requests":
-      return;
-      <SupportRequests />;
-
+      return <SupportRequests />;
+    case "/manager/support-requests":
+      return <SupportRequests />;
+    case "/common/support-requests/:id":
+      return <Chat />;
     default:
       return <Login />;
   }

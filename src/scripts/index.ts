@@ -6,3 +6,5 @@ export * from "./User";
 export * from "./Hotel";
 export * from "./Router";
 export * from "./Reservation";
+export * from "./SupportRequests";
+export * from "./Custom";

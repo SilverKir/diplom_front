@@ -1,1 +1,2 @@
-export {SupportRequests} from "./SupportRequests"
+export { SupportRequests } from "./SupportRequests";
+export { Chat } from "./Chat";
