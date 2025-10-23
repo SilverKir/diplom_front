@@ -32,7 +32,9 @@ export const MessageForm = (props: {
             <span className={classes["message-data-time"]}>
               {ConvertDate(chatMessage.createdAt)}
             </span>
-            <span className="message-data-name">{chatMessage.author.name}</span>
+            <span className={classes["message-data-name"]}>
+              {chatMessage.author.name}
+            </span>
             <i className={classes["me"]}></i>
           </div>
           <div

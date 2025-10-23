@@ -1,18 +1,7 @@
-.clearfix:after {
-  visibility: hidden;
-  display: block;
-  font-size: 0;
-  content: " ";
-  clear: both;
-  height: 0;
-}
-
 .chat .chat-history .message_data {
   margin-bottom: 15px;
 }
 
-.online,
-.offline,
 .me {
   margin-right: 3px;
   font-size: 10px;

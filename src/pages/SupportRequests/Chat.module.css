@@ -5,3 +5,31 @@
   border-radius: 8px;
   padding: 10px;
 }
+
+.container {
+  margin: 0 auto;
+  background: #444753;
+  border-radius: 5px;
+}
+
+.chat {
+  width: 490px;
+  float: left;
+  background: #f2f5f8;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  color: #434651;
+}
+
+.chat .chat-history {
+  padding: 10px 10px 10px;
+  border-bottom: 4px solid white;
+  overflow-y: scroll;
+}
+
+.input-field {
+  width: 200px;
+  height: 40px;
+  border: 2px solid black;
+  color: black;
+}
