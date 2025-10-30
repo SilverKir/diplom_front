@@ -4,7 +4,7 @@ const URL = import.meta.env.VITE_APP_NAMES_URL;
 
 export const GetDataFromAPI = async (fetchParam: IRequestData) => {
   const response = await fetch(
-    URL +
+    URL +"/api"+
       fetchParam.url +
       "?" +
       new URLSearchParams(

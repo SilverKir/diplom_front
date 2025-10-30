@@ -5,6 +5,7 @@ const URL = import.meta.env.VITE_APP_NAMES_URL;
 export const SendFormDataToAPI = async (fetchParam: IRequestDataWithImages) => {
   const response = await fetch(
     URL +
+      "/api" +
       fetchParam.url +
       "?" +
       new URLSearchParams(

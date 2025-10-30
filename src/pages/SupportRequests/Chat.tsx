@@ -6,18 +6,18 @@ import { GetDataFromApiThunk } from "../../redux";
 import { useParams } from "react-router-dom";
 import { GetChatMessages, GetDataFromAPI, SendMessage } from "../../scripts";
 import { IChatMessage } from "../../interfaces";
-import { MessageForm } from "../../components";
+import { CustomButton, InputField, MessageForm } from "../../components";
 
 export const Chat = () => {
   const { id } = useParams();
   const [loaded, setLoaded] = useState(false);
   const { data } = useAppSelector((state) => state.apiAction);
-  const URL = import.meta.env.VITE_APP_NAMES_WS;
+  const URL = import.meta.env.VITE_APP_NAMES_URL;
   const dispatch = useAppDispatch();
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<IChatMessage[]>([]);
 
-  const socket = io(URL);
+  const socket = io(URL + "/chat");
 
   useEffect(() => {
     async function fetchData() {
@@ -48,6 +48,8 @@ export const Chat = () => {
     setMessage("");
   };
 
+  let isMyId = "";
+
   return (
     <>
       {loaded && (
@@ -58,7 +60,6 @@ export const Chat = () => {
               <ul>
                 {(data as IChatMessage[]).map(
                   (item: IChatMessage, index: number) => {
-                    let isMyId = "";
                     if (index === 0) {
                       isMyId = item.author.id;
                     }
@@ -68,13 +69,13 @@ export const Chat = () => {
                         className={`${classes.clearfix} ${classes.container} }`}
                       >
                         <div className={classes["chat"]}>
-                          <div className={classes["chat-history"]}>
+                          <li className={classes["chat-history"]}>
                             <MessageForm
                               key={index}
                               isMyMessage={isMyId === item.author.id}
                               chatMessage={item}
                             />
-                          </div>
+                          </li>
                         </div>
                       </div>
                     );
@@ -85,23 +86,28 @@ export const Chat = () => {
           <div>
             <ul>
               {messages.map((msg, index) => (
-                <li key={index} className={classes["chat-history"]}>
-                  <MessageForm
-                    key={index}
-                    isMyMessage={true}
-                    chatMessage={msg}
-                  />
-                </li>
+                <div className={`${classes.clearfix} ${classes.container} }`}>
+                  <div className={classes["chat"]}>
+                    <li key={index} className={classes["chat-history"]}>
+                      <MessageForm
+                        key={index}
+                        isMyMessage={isMyId === msg.author.id}
+                        chatMessage={msg}
+                      />
+                    </li>
+                  </div>
+                </div>
               ))}
             </ul>
             <form onSubmit={sendMessage}>
-              <input
-                className={classes["input-field"]}
-                type="text"
+              <InputField
+                name="text"
                 value={message}
+                placeholder="Введите сообщение"
+                type="text"
                 onChange={(e) => setMessage(e.target.value)}
               />
-              <button type="submit">Отправить</button>
+              <CustomButton type="submit" text="Отправить" />
             </form>
           </div>
         </div>

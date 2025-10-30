@@ -10,11 +10,13 @@ import {
 } from "../../scripts";
 import { ROWS_PER_PAGE } from "../../constants";
 import { ISupportRequest } from "../../interfaces";
-import { Pagination } from "../../components";
+import { CustomButton, Pagination } from "../../components";
+import { NewChat } from "./NewChat";
 
 export const SupportRequests = () => {
   const [loaded, setLoaded] = useState(false);
   const [isActive, setActive] = useState(true);
+  const [newChat, setNewChat] = useState(false);
   const dispatch = useAppDispatch();
   const { data } = useAppSelector((state) => state.apiAction);
   const { actions } = useAppSelector((state) => state.navActions);
@@ -74,67 +76,88 @@ export const SupportRequests = () => {
     fetchData();
   }, [isActive]);
 
+  const handleNewPageChange = (data: boolean) => {
+    setNewChat(data);
+  };
+
   return (
     <>
       {loaded && (
         <div className={classes["form-wrap"]}>
           <h1> Обращения в поддержку</h1>
-
           <div>
             {data &&
               Object.prototype.toString.call(data) === "[object Array]" && (
                 <>
-                  <div className={classes["active-checkbox"]}>
-                    <input
-                      type="checkbox"
-                      checked={isActive}
-                      onChange={() => setActive(!isActive)}
-                    />
-                    <p> {isActive ? "активные" : "неактивные"}</p>
-                  </div>
-                  <table className={classes["table-wrap"]}>
-                    <thead>
-                      <tr>
-                        <th>ID</th>
-                        <th>Дата создания</th>
-                        <th>Активно</th>
-                        <th>Есть новые сообщения</th>
-                        {actions.role === "manager" && <th>Клиент</th>}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {(data as ISupportRequest[]).map(
-                        (item: ISupportRequest, index: number) => (
-                          <tr
-                            key={index}
-                            onClick={() => {
-                              navigate(`/common/support-requests/${item.id}`);
-                            }}
-                          >
-                            <td>{index + 1}</td>
-                            <td>{ConvertDate(item.createdAt)}</td>
-                            <td>{item.hasNewMessages ? "Да" : "Нет"}</td>
-                            <td>{item.isActive ? "Да" : "Нет"}</td>
-                            {item.client && <td>{item.client.name}</td>}
-                          </tr>
-                        )
+                  {!newChat && (
+                    <>
+                      <div className={classes["active-checkbox"]}>
+                        <input
+                          type="checkbox"
+                          checked={isActive}
+                          onChange={() => setActive(!isActive)}
+                        />
+                        <p> {isActive ? "активные" : "неактивные"}</p>
+                      </div>
+                      {actions.role === "client" && (
+                        <CustomButton
+                          type="button"
+                          text="Новый чат"
+                          onClick={() => {
+                            handleNewPageChange(true);
+                          }}
+                        />
                       )}
-                    </tbody>
-                  </table>
-                  {(notFirstPage ||
-                    (data as object[]).length === ROWS_PER_PAGE) && (
-                    <Pagination
-                      onClick={onPaginationClick}
-                      totalPages={page}
-                      currentPage={currentPage}
-                      dataLength={(data as object[]).length}
-                      setPage={setPage}
-                      morePage={
-                        (data as object[]).length === ROWS_PER_PAGE && morePage
-                      }
-                      setMoreРage={setMorePage}
-                    />
+                      <table className={classes["table-wrap"]}>
+                        <thead>
+                          <tr>
+                            <th>ID</th>
+                            <th>Дата создания</th>
+                            <th>Активно</th>
+                            <th>Есть новые сообщения</th>
+                            {actions.role === "manager" && <th>Клиент</th>}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {(data as ISupportRequest[]).map(
+                            (item: ISupportRequest, index: number) => (
+                              <tr
+                                key={index}
+                                onClick={() => {
+                                  navigate(
+                                    `/common/support-requests/${item.id}`
+                                  );
+                                }}
+                              >
+                                <td>{index + 1}</td>
+                                <td>{ConvertDate(item.createdAt)}</td>
+                                <td>{item.isActive ? "Да" : "Нет"}</td>
+                                <td>{item.hasNewMessages ? "Да" : "Нет"}</td>
+                                {item.client && <td>{item.client.name}</td>}
+                              </tr>
+                            )
+                          )}
+                        </tbody>
+                      </table>
+
+                      {(notFirstPage ||
+                        (data as object[]).length === ROWS_PER_PAGE) && (
+                        <Pagination
+                          onClick={onPaginationClick}
+                          totalPages={page}
+                          currentPage={currentPage}
+                          dataLength={(data as object[]).length}
+                          setPage={setPage}
+                          morePage={
+                            (data as object[]).length === ROWS_PER_PAGE &&
+                            morePage
+                          }
+                          setMoreРage={setMorePage}
+                        />
+                      )}
+                    </>
                   )}
+                  {newChat && <NewChat changeWiew={handleNewPageChange} />}
                 </>
               )}
           </div>
