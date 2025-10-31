@@ -2,4 +2,5 @@ export { GetClientSupportRequests } from "./GetClientSupportRequests";
 export { GetManagerSupportRequests } from "./GetManagerSupportRequests";
 export { GetChatMessages } from "./GetChatMessages";
 export { SendMessage } from "./SendMessage";
-export {CreateChat} from "./CreateChat"
+export { CreateChat } from "./CreateChat";
+export { MarkMessagesAsRead } from "./MarkMessagesAsRead";

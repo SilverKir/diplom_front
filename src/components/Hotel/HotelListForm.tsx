@@ -16,7 +16,7 @@ export const HotelListForm = (props: IHotelRoomProps) => {
       <article className={classes["hotel-room-wrap"]}>
         <img
           className={classes["hotel-room-image"]}
-          src={props.images[0] ? URL + "/images/" + props.images[0] : ""}
+          src={props.images[0] ? URL + "/api/images/" + props.images[0] : ""}
           alt={
             props.images[0] ? "room photo of hotel " + props.hotel.title : ""
           }

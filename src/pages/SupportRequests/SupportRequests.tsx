@@ -91,6 +91,7 @@ export const SupportRequests = () => {
                 <>
                   {!newChat && (
                     <>
+                    <div className={classes["header-wrap"]}>
                       <div className={classes["active-checkbox"]}>
                         <input
                           type="checkbox"
@@ -108,6 +109,7 @@ export const SupportRequests = () => {
                           }}
                         />
                       )}
+                      </div>
                       <table className={classes["table-wrap"]}>
                         <thead>
                           <tr>

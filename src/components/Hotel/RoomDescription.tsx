@@ -2,6 +2,7 @@ import { IHotelRoomProps } from "../../interfaces";
 import { CustomButton } from "..";
 
 import classes from "./roomDesrciption.module.css";
+import { useNavigate } from "react-router-dom";
 
 const URL = import.meta.env.VITE_APP_NAMES_URL;
 
@@ -13,6 +14,7 @@ type RoomDescriptionProps = {
 };
 
 export const RoomDescription = (props: RoomDescriptionProps) => {
+  const navigate = useNavigate();
   return (
     <>
       <div className={classes["room-wrap"]}>
@@ -22,7 +24,7 @@ export const RoomDescription = (props: RoomDescriptionProps) => {
               <img
                 key={index}
                 className={classes["hotel-room-image"]}
-                src={image ? URL + "/images/" + image : ""}
+                src={image ? URL + "/api/images/" + image : ""}
                 alt={
                   image ? "room photo of hotel " + props.room.description : ""
                 }
@@ -34,15 +36,25 @@ export const RoomDescription = (props: RoomDescriptionProps) => {
           {props.room.description}
         </div>
         {props.buttonVisible && (
-          <CustomButton
-            className={classes["info-button"]}
-            type="button"
-            text={props.buttonName}
-            onClick={() => {
-              props.onClick(props.room, props.room.hotel.id);
-            }}
-            isLoading={false}
-          />
+          <div className={classes["button-wrap"]}>
+            <CustomButton
+              className={classes["info-button"]}
+              type="button"
+              text={props.buttonName}
+              onClick={() => {
+                props.onClick(props.room, props.room.hotel.id);
+              }}
+              isLoading={false}
+            />
+
+            <CustomButton
+              type="button"
+              text="Отмена"
+              onClick={() => {
+                navigate(-1);
+              }}
+            />
+          </div>
         )}
       </div>
     </>

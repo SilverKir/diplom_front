@@ -3,8 +3,13 @@ import { io } from "socket.io-client";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import classes from "./Chat.module.css";
 import { GetDataFromApiThunk } from "../../redux";
-import { useParams } from "react-router-dom";
-import { GetChatMessages, GetDataFromAPI, SendMessage } from "../../scripts";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  GetChatMessages,
+  GetDataFromAPI,
+  MarkMessagesAsRead,
+  SendMessage,
+} from "../../scripts";
 import { IChatMessage } from "../../interfaces";
 import { CustomButton, InputField, MessageForm } from "../../components";
 
@@ -16,6 +21,7 @@ export const Chat = () => {
   const dispatch = useAppDispatch();
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<IChatMessage[]>([]);
+  const navigate = useNavigate();
 
   const socket = io(URL + "/chat");
 
@@ -25,6 +31,11 @@ export const Chat = () => {
         await dispatch(GetDataFromApiThunk(GetChatMessages(id)));
         setLoaded(true);
       }
+    }
+
+    async function markAsRead() {
+      if (id)
+        await dispatch(GetDataFromApiThunk(MarkMessagesAsRead(id, Date())));
     }
 
     fetchData();
@@ -37,6 +48,7 @@ export const Chat = () => {
 
     return () => {
       socket.off(id);
+      markAsRead();
     };
   }, []);
 
@@ -83,33 +95,41 @@ export const Chat = () => {
                 )}
               </ul>
             )}
-          <div>
-            <ul>
-              {messages.map((msg, index) => (
-                <div className={`${classes.clearfix} ${classes.container} }`}>
-                  <div className={classes["chat"]}>
-                    <li key={index} className={classes["chat-history"]}>
-                      <MessageForm
-                        key={index}
-                        isMyMessage={isMyId === msg.author.id}
-                        chatMessage={msg}
-                      />
-                    </li>
-                  </div>
+
+          <ul>
+            {messages.map((msg, index) => (
+              <div className={`${classes.clearfix} ${classes.container} }`}>
+                <div className={classes["chat"]}>
+                  <li key={index} className={classes["chat-history"]}>
+                    <MessageForm
+                      key={index}
+                      isMyMessage={isMyId === msg.author.id}
+                      chatMessage={msg}
+                    />
+                  </li>
                 </div>
-              ))}
-            </ul>
-            <form onSubmit={sendMessage}>
-              <InputField
-                name="text"
-                value={message}
-                placeholder="Введите сообщение"
-                type="text"
-                onChange={(e) => setMessage(e.target.value)}
-              />
+              </div>
+            ))}
+          </ul>
+          <form onSubmit={sendMessage}>
+            <InputField
+              name="text"
+              value={message}
+              placeholder="Введите сообщение"
+              type="text"
+              onChange={(e) => setMessage(e.target.value)}
+            />
+            <div className={classes["buttons-wrap"]}>
               <CustomButton type="submit" text="Отправить" />
-            </form>
-          </div>
+              <CustomButton
+                type="button"
+                text="Отменить"
+                onClick={() => {
+                  navigate(-1);
+                }}
+              />
+            </div>
+          </form>
         </div>
       )}
     </>

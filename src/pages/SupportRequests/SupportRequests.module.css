@@ -8,4 +8,12 @@
 .active-checkbox {
   display: flex;
   gap: 15px;
+  align-items: center;
+}
+.header-wrap {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
 }

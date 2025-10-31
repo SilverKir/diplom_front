@@ -27,3 +27,8 @@
 .info-button {
   width: 150px;
 }
+.button-wrap {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}

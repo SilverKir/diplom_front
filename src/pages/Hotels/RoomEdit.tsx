@@ -21,7 +21,7 @@ export const RoomEdit = (props: RoomEditProps) => {
   if (props.room && props.room.images) {
     props.room.images.map((image) => {
       if (image) {
-        roomImages.push(URL + "/images/" + image);
+        roomImages.push(URL + "/api/images/" + image);
       }
     });
   }

@@ -9,7 +9,7 @@ export const MessageForm = (props: {
   const { isMyMessage, chatMessage } = props;
   if (isMyMessage) {
     return (
-      <li>
+      <li className={`${classes.message} ${classes.my_message}`}>
         <div className={classes["message_data"]}>
           <span className={classes["message-data-name"]}>
             <i className={classes["online"]}></i>
@@ -26,7 +26,7 @@ export const MessageForm = (props: {
     );
   } else {
     return (
-      <li className={classes["clearfix"]}>
+      <li className={`${classes.message} ${classes.other_message}`}>
         <div className={`${classes.message_data} ${classes.align_right}`}>
           <div className={classes["message_data"]}>
             <span className={classes["message-data-time"]}>
