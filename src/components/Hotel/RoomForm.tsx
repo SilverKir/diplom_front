@@ -81,7 +81,7 @@ export const RoomForm = (props: RoomFormProps) => {
     const draggedTo = Number(event.currentTarget.dataset.position);
     const fileDragged = newList[draggedFrom ? draggedFrom : 0];
     const remainingFiles = newList.filter(
-      (item, index) => index !== draggedFrom
+      (_item, index) => index !== draggedFrom
     );
     newList = [
       ...remainingFiles.slice(0, draggedTo),
@@ -161,7 +161,7 @@ export const RoomForm = (props: RoomFormProps) => {
   };
 
   const deleteImage = (deletedIndex: number) => {
-    const newList = fileData.filter((item, index) => index !== deletedIndex);
+    const newList = fileData.filter((_item, index) => index !== deletedIndex);
     setFileData(newList);
   };
 

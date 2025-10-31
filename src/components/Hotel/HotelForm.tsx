@@ -38,8 +38,10 @@ export const HotelForm = (props: HotelFormProps) => {
         setError("");
         setChecked(true);
       } catch (err) {
-        setError(err.error);
-        setChecked(false);
+        if (err instanceof yup.ValidationError) {
+          setError(err.errors[0]);
+          setChecked(false);
+        }
       }
     } else if (isUpdate && name === "description") {
       setChecked(true);

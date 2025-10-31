@@ -63,8 +63,10 @@ export const RegisterForm = (props: RegisterFormProps) => {
         Errors[0] = "";
         Checked[0] = true;
       } catch (err) {
-        Errors[0] = err.errors;
+         if (err instanceof yup.ValidationError) {
+        Errors[0] = err.errors[0];
         Checked[0] = false;
+      }
       }
     } else if (name === "password") {
       try {
@@ -72,8 +74,10 @@ export const RegisterForm = (props: RegisterFormProps) => {
         Errors[1] = "";
         Checked[1] = true;
       } catch (err) {
-        Errors[1] = err.errors;
+         if (err instanceof yup.ValidationError) {
+        Errors[1] = err.errors[0];
         Checked[1] = false;
+      }
       }
     } else if (name === "name") {
       try {
@@ -81,8 +85,10 @@ export const RegisterForm = (props: RegisterFormProps) => {
         Errors[2] = "";
         Checked[2] = true;
       } catch (err) {
-        Errors[2] = err.errors;
+         if (err instanceof yup.ValidationError) {
+        Errors[2] = err.errors[0];
         Checked[2] = false;
+      }
       }
     } else if (name === "contactPhone") {
       try {
@@ -90,8 +96,10 @@ export const RegisterForm = (props: RegisterFormProps) => {
         Errors[3] = "";
         Checked[3] = true;
       } catch (err) {
-        Errors[3] = err.errors;
+         if (err instanceof yup.ValidationError) {
+        Errors[3] = err.errors[0];
         Checked[3] = false;
+         }
       }
     }
 

@@ -50,7 +50,7 @@ export const InputField = (props: InputFieldProps) => {
             placeholder={placeholder}
             className={classes["inputField"]}
             name={name}
-            value={value}
+            value={value instanceof Date ? value.toISOString() : value}
             onChange={onChange}
           />
           <i className={classes["icon"]}>

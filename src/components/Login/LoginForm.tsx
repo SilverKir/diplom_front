@@ -45,8 +45,10 @@ export const LoginForm = (props: LoginFormProps) => {
         Errors[0] = "";
         Checked[0] = true;
       } catch (err) {
-        Errors[0] = err.errors;
-        Checked[0] = false;
+        if (err instanceof yup.ValidationError) {
+          Errors[0] = err.errors[0];
+          Checked[0] = false;
+        }
       }
     } else {
       try {
@@ -54,8 +56,10 @@ export const LoginForm = (props: LoginFormProps) => {
         Errors[1] = "";
         Checked[1] = true;
       } catch (err) {
-        Errors[1] = err.errors;
-        Checked[1] = false;
+        if (err instanceof yup.ValidationError) {
+          Errors[1] = err.errors[0];
+          Checked[1] = false;
+        }
       }
     }
     setError(Errors);
