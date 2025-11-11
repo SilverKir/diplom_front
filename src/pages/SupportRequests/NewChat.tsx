@@ -11,7 +11,7 @@ export const NewChat: React.FC<INewChat> = ({ changeWiew }) => {
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
-  const sendMessage = async (e) => {
+  const sendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (message.trim()) {

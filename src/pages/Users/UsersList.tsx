@@ -89,7 +89,7 @@ export const UsersList = (props: { role: string }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {data.map((item: IUser, index: number) => (
+                  {(data as IUser[]).map((item: IUser, index: number) => (
                     <tr key={item.id}>
                       <td>{index + 1 + currentPage * ROWS_PER_PAGE}</td>
                       {<UserListForm user={item} role={role} />}
@@ -98,15 +98,18 @@ export const UsersList = (props: { role: string }) => {
                 </tbody>
               </table>
 
-              {(notFirstPage || data.length === ROWS_PER_PAGE) && (
+              {(notFirstPage ||
+                (data as object[]).length === ROWS_PER_PAGE) && (
                 <div className={classes["pagination"]}>
                   <Pagination
                     onClick={onPaginationClick}
                     totalPages={page}
                     currentPage={currentPage}
-                    dataLength={data.length}
+                    dataLength={(data as object[]).length}
                     setPage={setPage}
-                    morePage={data.length === ROWS_PER_PAGE && morePage}
+                    morePage={
+                      (data as object[]).length === ROWS_PER_PAGE && morePage
+                    }
                     setMoreРage={setMorePage}
                   />
                 </div>

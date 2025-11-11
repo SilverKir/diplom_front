@@ -1,10 +1,11 @@
+import { ChangeEvent } from "react";
 import { Role } from "../../constants/login";
 import classes from "./RoleEnumSelect.module.css";
 
 export const RoleSelect = (props: {
   currentRole: Role;
   name: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 }) => {
   const { currentRole, name, onChange } = props;
 
@@ -18,11 +19,9 @@ export const RoleSelect = (props: {
       name={name}
       value={currentRole}
       onChange={onChange}
-      //   onChange={(e) => {
-      //     setCurrentRole(Role[e.target.value as keyof typeof Role])}};
     >
       {getKeys(Role).map((data, index) => (
-        <option key={index} value={Role[data]}>
+        <option key={index} value={Role[data as keyof typeof Role]}>
           {data}
         </option>
       ))}

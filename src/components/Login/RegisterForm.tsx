@@ -1,4 +1,4 @@
-import { useState, Dispatch, SetStateAction } from "react";
+import { useState, Dispatch, SetStateAction, ChangeEvent } from "react";
 import { Link } from "react-router-dom";
 import { InputField } from "../Custom/InputField";
 import classes from "./registerForm.module.css";
@@ -47,7 +47,9 @@ export const RegisterForm = (props: RegisterFormProps) => {
     .nullable()
     .matches(phoneRegExp, PHONE_NOT_VALID);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLSelectElement> | ChangeEvent<HTMLInputElement>
+  ) => {
     const { name, value } = e.target;
     props.setForm((prevForm) => ({
       ...prevForm,
@@ -63,10 +65,10 @@ export const RegisterForm = (props: RegisterFormProps) => {
         Errors[0] = "";
         Checked[0] = true;
       } catch (err) {
-         if (err instanceof yup.ValidationError) {
-        Errors[0] = err.errors[0];
-        Checked[0] = false;
-      }
+        if (err instanceof yup.ValidationError) {
+          Errors[0] = err.errors[0];
+          Checked[0] = false;
+        }
       }
     } else if (name === "password") {
       try {
@@ -74,10 +76,10 @@ export const RegisterForm = (props: RegisterFormProps) => {
         Errors[1] = "";
         Checked[1] = true;
       } catch (err) {
-         if (err instanceof yup.ValidationError) {
-        Errors[1] = err.errors[0];
-        Checked[1] = false;
-      }
+        if (err instanceof yup.ValidationError) {
+          Errors[1] = err.errors[0];
+          Checked[1] = false;
+        }
       }
     } else if (name === "name") {
       try {
@@ -85,10 +87,10 @@ export const RegisterForm = (props: RegisterFormProps) => {
         Errors[2] = "";
         Checked[2] = true;
       } catch (err) {
-         if (err instanceof yup.ValidationError) {
-        Errors[2] = err.errors[0];
-        Checked[2] = false;
-      }
+        if (err instanceof yup.ValidationError) {
+          Errors[2] = err.errors[0];
+          Checked[2] = false;
+        }
       }
     } else if (name === "contactPhone") {
       try {
@@ -96,10 +98,10 @@ export const RegisterForm = (props: RegisterFormProps) => {
         Errors[3] = "";
         Checked[3] = true;
       } catch (err) {
-         if (err instanceof yup.ValidationError) {
-        Errors[3] = err.errors[0];
-        Checked[3] = false;
-         }
+        if (err instanceof yup.ValidationError) {
+          Errors[3] = err.errors[0];
+          Checked[3] = false;
+        }
       }
     }
 

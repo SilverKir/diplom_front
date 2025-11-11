@@ -52,7 +52,7 @@ export const Chat = () => {
     };
   }, []);
 
-  const sendMessage = async (e) => {
+  const sendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (message.trim() && id) {
       await GetDataFromAPI(SendMessage(id, message));
